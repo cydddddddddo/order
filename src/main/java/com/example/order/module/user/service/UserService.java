@@ -8,5 +8,7 @@ import org.apache.ibatis.annotations.Param;
  * @data 2020/6/30 - 0:48
  */
 public interface UserService {
-    UserDTO getUserById(@Param("userId")String userId);
+    UserDTO getUserById(String userId);
+
+    Integer addUser(UserDTO user);
 }

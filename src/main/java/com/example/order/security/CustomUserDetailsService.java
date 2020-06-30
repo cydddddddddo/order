@@ -42,6 +42,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             loginUser = userService.getUserById(userId);
             //数据库中密码已加密，此处可以不用加密
             //user = new User(loginUser.getName(),loginUser.getPassword(),getAuthorities(loginUser.getRole()));
+            user = new User(loginUser.getUserId(),loginUser.getUserPassword(),getAuthorities(loginUser.getUserRole()));
         }catch (Exception e){
             e.printStackTrace();
             throw new UsernameNotFoundException("搜索用户信息错误");
