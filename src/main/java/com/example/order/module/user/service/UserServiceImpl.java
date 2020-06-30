@@ -13,10 +13,16 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDao UserDao;
+    private UserDao userDao;
 
     @Override
     public UserDTO getUserById(String userId) {
-        return UserDao.getUserById(userId);
+        return userDao.getUserById(userId);
+    }
+
+    @Override
+    public Integer addUser(UserDTO user) {
+        return userDao.addUser(user);
+
     }
 }

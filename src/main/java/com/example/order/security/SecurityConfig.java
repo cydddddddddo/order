@@ -38,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/sys/toLogin")
                 .loginProcessingUrl("/login")
                 .successForwardUrl("/login/login")
-                .failureForwardUrl("/login/login2")
-                .usernameParameter("name");
+                .failureForwardUrl("/login/loginError")
+                .usernameParameter("userId");
         //注销
         http.logout().logoutSuccessUrl("/sys/toLogin");
         //记住账号功能

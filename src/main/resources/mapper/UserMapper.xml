@@ -17,4 +17,13 @@
         WHERE
             user_id = #{userId}
     </select>
+
+    <insert id="addUser" parameterType="com.example.order.dto.UserDTO">
+        INSERT INTO
+            user(user_id,user_name,user_password,user_role,user_sex,user_email,user_pic,login_time)
+        VALUES
+            (#{user.userId},#{user.userName},#{user.userPassword},#{user.userRole}
+            ,#{user.userSex},#{user.userEmail},#{user.userPic},#{user.loginTime})
+
+    </insert>
 </mapper>
