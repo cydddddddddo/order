@@ -6,7 +6,6 @@
         SELECT
             user_id,
             user_name,
-            user_password,
             user_role,
             user_sex,
             user_email,
@@ -17,4 +16,34 @@
         WHERE
             user_id = #{userId}
     </select>
+
+    <select id="getAllUser" resultType="com.example.order.dto.UserDTO">
+        SELECT
+            user_id,
+            user_name,
+            user_role,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time
+        FROM
+            user
+    </select>
+
+    <insert id="insertAllUser">
+        insert into user(
+            user_id,
+            user_name,
+            user_password,
+            user_role,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time)
+        values
+        <foreach collection="userList" item="user" separator=",">
+            (#{user.userId},#{user.userName}, #{user.userPassword},#{user.userRole},#{user.userSex},#{user.userEmail},#{user.userPic},#{user.loginTime})
+        </foreach>
+
+    </insert>
 </mapper>
