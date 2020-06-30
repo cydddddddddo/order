@@ -17,8 +17,8 @@
 	<form class="layui-form" style="height: 200px">
 		<div class="login_face"><img src="/resources/images/face.jpg" class="userAvatar"></div>
 		<div class="layui-form-item input-item">
-			<label for="userName">用户名</label>
-			<input type="text" placeholder="请输入用户名" autocomplete="off" name="name" id="userName" class="layui-input" lay-verify="required">
+			<label for="userId">账号</label>
+			<input type="text" placeholder="请输入用户名" autocomplete="off" name="userId" id="userId" class="layui-input" lay-verify="required">
 		</div>
 		<div class="layui-form-item input-item">
 			<label for="password">密码</label>
@@ -71,11 +71,13 @@
 				//设置登录按钮 恢复可点击   在前端防止 重复点击
 				btn.text("登录").attr("disabled",false).removeClass("layui-disabled");
 				layer.msg(rs.msg);
-				if(rs.code != 200){
-					layer.msg(rs.msg);
+				if(rs.code != 0){
+					//layer.msg(rs.msg);
+					layer.msg("登陆失败！");
 				}else{
 					//跳转到templates/system/index/index.html页面
-					layer.msg(rs.msg);
+					//layer.msg(rs.msg);
+					layer.msg("登陆成功!");
 					location.href="/sys/index";
 				}
 			});

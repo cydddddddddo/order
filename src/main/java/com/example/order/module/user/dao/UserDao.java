@@ -15,4 +15,6 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     UserDTO getUserById(@Param("userId")String userId);
+
+    Integer addUser(@Param("user")UserDTO user);
 }
