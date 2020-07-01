@@ -283,8 +283,8 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
         fly.json('/message/nums/', {
           _: new Date().getTime()
         }, function(res){
-          if(res.status === 0 && res.count > 0){
-            var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ res.count +'</a>');
+          if(res.status === 0 && res.CountMeal > 0){
+            var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ res.CountMeal +'</a>');
             elemUser.append(msg);
             msg.on('click', function(){
               fly.json('/message/read', {}, function(res){
@@ -293,7 +293,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
                 }
               });
             });
-            layer.tips('你有 '+ res.count +' 条未读消息', msg, {
+            layer.tips('你有 '+ res.CountMeal +' 条未读消息', msg, {
               tips: 3
               ,tipsMore: true
               ,fixed: true

@@ -1,4 +1,4 @@
-package com.example.order.web;
+package com.example.order.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
