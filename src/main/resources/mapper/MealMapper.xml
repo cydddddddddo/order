@@ -10,8 +10,8 @@
         where id=#{id}
     </select>
     <insert id="insert">
-        insert into meal(id,`name`,`description`,`picture`,`status`)
-        values (#{meal.id},#{meal.name},#{meal.description},#{meal.picture},#{meal.status})
+        insert into meal(`name`,`description`,`picture`,`status`)
+        values (#{meal.name},#{meal.description},#{meal.picture},#{meal.status})
     </insert>
     <update id="update">
         update meal set `name`=#{meal.name},`description`=#{meal.description},`picture`=#{meal.picture}

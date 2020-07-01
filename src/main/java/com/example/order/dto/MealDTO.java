@@ -1,5 +1,6 @@
 package com.example.order.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2020/6/30
  */
 @Data
+@ApiModel(value="菜品类",description="请求参数类" )
 public class MealDTO {
     private String id;
     private String name;

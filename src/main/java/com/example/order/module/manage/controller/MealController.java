@@ -4,6 +4,9 @@ import com.example.order.dto.MealDTO;
 import com.example.order.module.user.service.MealService;
 import com.example.order.web.Path;
 import com.example.order.web.ResultInfo;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
@@ -13,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -27,6 +32,8 @@ public class MealController {
     @Resource
     private MealService mealService;
 
+    @ApiOperation(value = "post请求调用示例", notes = "查询所有菜品", httpMethod = "GET")
+    @ApiResponses(@ApiResponse(code = 200, message = "处理成功"))
     @GetMapping("/findAll")
     public ResultInfo finAll(){
         ResultInfo resultInfo=ResultInfo.success();

@@ -1,5 +1,7 @@
 package com.example.order.web;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +14,11 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 @Builder(toBuilder = true)
+@ApiModel(value="基础返回类",description="基础返回类")
 public class ResultInfo {
+    @ApiModelProperty(example="0")
     private String code;
+    @ApiModelProperty(example="提示信息")
     private String msg;
     private Object data;
 

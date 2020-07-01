@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class IndexController  {
-
     @RequestMapping({"sys/toLogin","/"})
     public String toLogin(){
         return "system/index/login";
