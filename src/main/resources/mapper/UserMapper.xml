@@ -8,6 +8,7 @@
             user_name,
             user_password,
             user_role,
+            user_group,
             user_sex,
             user_email,
             user_pic,
@@ -18,12 +19,120 @@
             user_id = #{userId}
     </select>
 
+//ccj
+    <select id="getAllUser" resultType="com.example.order.dto.UserDTO">
+        SELECT
+            user_id,
+            user_name,
+            user_role,
+            user_group,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time
+        FROM
+            user
+    </select>
+
+    <insert id="insertAllUser">
+        insert into user(
+            user_id,
+            user_name,
+            user_password,
+            user_group,
+            user_role,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time)
+        values
+        <foreach collection="userList" item="user" separator=",">
+            (#{user.userId},#{user.userName}, #{user.userPassword}, #{user.userGroup},#{user.userRole},#{user.userSex},#{user.userEmail},#{user.userPic},#{user.loginTime})
+        </foreach>
+
+    </insert>
+
+//=======
+
     <insert id="addUser" parameterType="com.example.order.dto.UserDTO">
         INSERT INTO
-            user(user_id,user_name,user_password,user_role,user_sex,user_email,user_pic,login_time)
+            user(user_id,user_name,user_password,user_role,user_group,user_sex,user_email,user_pic,login_time)
         VALUES
-            (#{user.userId},#{user.userName},#{user.userPassword},#{user.userRole}
+            (#{user.userId},#{user.userName},#{user.userPassword},#{user.userRole},#{user.userGroup}
             ,#{user.userSex},#{user.userEmail},#{user.userPic},#{user.loginTime})
 
     </insert>
+
+    <update id="updateUser" parameterType="com.example.order.dto.UserDTO">
+        UPDATE
+            user
+        <set>
+        <if test="user.userName!=null">
+            user_name = #{user.userName},
+        </if>
+        <if test="user.userPassword!=null">
+            user_password = #{user.userPassword},
+        </if>
+        <if test="user.userRole!=null">
+            user_role = #{user.userRole},
+        </if>
+        <if test="user.userGroup!=null">
+            user_group = #{user.userGroup},
+        </if>
+        <if test="user.userSex!=null">
+            user_sex = #{user.userSex},
+        </if>
+        <if test="user.userEmail!=null">
+            user_email = #{user.userEmail},
+        </if>
+        <if test="pic!=null">
+            user_pic = #{pic},
+        </if>
+        <if test="user.loginTime!=null">
+            login_time = #{user.loginTime}
+        </if>
+        </set>
+        WHERE
+            user_id = #{user.userId}
+    </update>
+
+    <select id="getUserList" resultType="com.example.order.dto.UserDTO">
+        SELECT
+            user_id,
+            user_name,
+            user_password,
+            user_role,
+            user_group,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time
+        FROM
+            user
+        WHERE
+        1=1
+        <if test="key!=null">
+            AND
+            CONCAT(user_id,user_name,user_role,user_group,user_sex,user_email,IFNULL(login_time,""))
+            LIKE
+            CONCAT('%',#{key},'%')
+        </if>
+        LIMIT
+        ${(page-1)*limit},${limit}
+    </select>
+
+    <select id="getCount" resultType="java.lang.Long">
+        SELECT
+            COUNT(user_id)
+        FROM
+            user
+        WHERE
+        1=1
+        <if test="key!=null">
+            AND
+            CONCAT(user_id,user_name,user_role,user_group,user_sex,user_email,IFNULL(login_time,""))
+            LIKE
+            CONCAT('%',#{key},'%')
+        </if>
+    </select>
 </mapper>
