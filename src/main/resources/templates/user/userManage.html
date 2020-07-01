@@ -26,7 +26,10 @@
                 <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
             </div>
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-green layui-btn-normal" href="/user/add">添加用户</a>
+                <a class="layui-btn layui-btn-green layui-btn-normal" href="/user/add">单个添加</a>
+            </div>
+            <div class="layui-inline layui-upload-list">
+                <a class="layui-btn layui-btn-green uploadBtn">批量添加</a>
             </div>
         </form>
     </blockquote>
@@ -39,15 +42,16 @@
 </form>
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 <script type="text/javascript">
-    layui.use(['form','layer','laydate','table','laytpl'],function(){
+    layui.use(['form','layer','laydate','upload','table','laytpl'],function(){
         var form = layui.form,
             layer = parent.layer === undefined ? layui.layer : top.layer,
             $ = layui.jquery,
             laydate = layui.laydate,
             laytpl = layui.laytpl,
+            upload = layui.upload,
             table = layui.table;
 
-        //生涯列表
+
         var tableIns = table.render({
             elem: '#userList',
             url : '/user/list',
@@ -60,26 +64,42 @@
             cols : [
                 [
                     {type: "checkbox", fixed:"left", width:50},
-                    {field: 'id',title: "id",width: 60,align: 'center',sort: true,edit:'text'},
-                    {field: 'account',title: "账户",width: 80,align: 'center',sort: true,edit:'text'},
-                    {field: 'role', title: '用户权限',align: 'center',width: 120,sort:true,edit:'text'},
-                    {field: 'nickName', title: '用户昵称',align: 'center',width: 110,sort:true,edit:'text'},
-                    {field: 'grade', title: '年级',align: 'center', width:110,edit:'text'},
-                    {field: 'college', title: '学院',width: 170,align: 'center',sort: true,edit:'text'},
-                    {field: 'email',title: '邮箱',width: 170,align: 'center',sort: true,edit:'text'},
-                    {field: 'synopsis',title: '简介',edit:'text'}
+                    {field: 'userId',title: "员工号",width: 100,align: 'center',sort: true},
+                    {field: 'userRole', title: '角色',align: 'center',width: 120,sort:true,edit:'text'},
+                    {field: 'userName', title: '姓名',align: 'center',width: 110,sort:true,edit:'text'},
+                    {field: 'userGroup', title: '组别',align: 'center', width:110,edit:'text'},
+                    {field: 'userSex', title: '性别',width: 170,align: 'center',sort: true,edit:'text'},
+                    {field: 'userEmail',title: '邮箱',width: 170,align: 'center',sort: true,edit:'text'}
                 ]
             ]
+            ,parseData:function (res) {
+                return{
+                    "code":res.code,
+                    "count":res.data.count,
+                    "data":res.data.list
+                }
+            }
         });
+
+        upload.render({
+            elem: '.uploadBtn',
+            url:'http://172.16.10.64:8080/uploadUerExcel',
+            accept:'file',
+            done:function (res) {
+                if(res){
+                    layer.msg("上传成功！")
+                }
+            }
+        })
 
         table.on('edit(userList)',function (obj) {
             var value = obj.value,
                 data = obj.data,
                 field = obj.field;
-            layer.msg('[ID:'+data.id+'] '+field+'字段更改为:'+value);
+            layer.msg('[ID:'+data.userId+'] '+field+'字段更改为:'+value);
 
-            $.post("/user/amend",{
-                id : obj.data.id,
+            $.post("/user/update",{
+                userId : obj.data.userId,
                 field : obj.field,
                 value : obj.value
             },function (data) {

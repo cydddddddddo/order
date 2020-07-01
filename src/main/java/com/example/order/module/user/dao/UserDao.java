@@ -18,9 +18,11 @@ public interface UserDao {
 
     UserDTO getUserById(@Param("userId")String userId);
 
+  //ccj
     List<UserDTO> getAllUser();
 
     int insertAllUser(@Param("userList") List<UserDTO> userDTOList);
+  //.
 
     Integer addUser(@Param("user")UserDTO user);
 

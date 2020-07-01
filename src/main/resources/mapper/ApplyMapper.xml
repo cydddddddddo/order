@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.order.module.apply.dao.ApplyDao">
+    <select id="getUserById" resultType="com.example.order.dto.UserDTO">
+        SELECT
+            user_id,
+            user_name,
+            user_password,
+            user_role,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time
+        FROM
+            user
+        WHERE
+            user_id = #{userId}
+    </select>
+
+
+
+<!--    添加申请-->
+    <insert id="insertApply" parameterType="com.example.order.dto.Apply">
+
+    insert  into apply (id,date,user_id,status) values (#{id},#{date},#{user_id},0)
+
+
+    </insert>
+
+
+<!--    批准申请-->
+
+    <update id="updateStatusById" parameterType="String" >
+
+        update apply set status =1 where id =#{id}
+    </update>
+
+<!--    选择菜品-->
+    <update id="updateDescriptionById" parameterType="com.example.order.dto.Apply" >
+        update  apply set  description=#{description} where id =#{id}
+    </update>
+
+
+
+</mapper>
+
