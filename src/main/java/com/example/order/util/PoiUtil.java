@@ -1,4 +1,4 @@
-package com.example.order.web;
+package com.example.order.util;
 
 import com.example.order.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;

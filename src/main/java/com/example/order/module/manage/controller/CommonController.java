@@ -1,8 +1,8 @@
 package com.example.order.module.manage.controller;
 
 import com.example.order.module.user.service.MailService;
-import com.example.order.web.ResultInfo;
-import com.example.order.web.VerificationUtil;
+import com.example.order.util.ResultInfo;
+import com.example.order.util.VerificationUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

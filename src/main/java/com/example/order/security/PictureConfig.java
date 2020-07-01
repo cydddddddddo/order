@@ -1,6 +1,6 @@
 package com.example.order.security;
 
-import com.example.order.web.Path;
+import com.example.order.util.Path;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

@@ -13,4 +13,11 @@ public interface UserService {
     UserDTO getUserById(String userId);
     List<UserDTO> getAllUser();
     int insertAllUser(List<UserDTO> userDTOList);
+    Integer addUser(UserDTO user);
+
+    Integer updateUser(UserDTO user,String pic);
+
+    List<UserDTO> getUserList(Integer page,Integer limit,String key);
+
+    Long getCount(String key);
 }

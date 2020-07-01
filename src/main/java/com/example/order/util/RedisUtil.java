@@ -1,4 +1,4 @@
-package com.example.order.web;
+package com.example.order.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

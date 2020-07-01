@@ -2,8 +2,8 @@ package com.example.order.module.manage.controller;
 
 import com.example.order.dto.UserDTO;
 import com.example.order.module.user.service.UserService;
-import com.example.order.web.PoiUtil;
-import com.example.order.web.ResultInfo;
+import com.example.order.util.PoiUtil;
+import com.example.order.util.ResultInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

@@ -2,7 +2,7 @@ package com.example.order.module.manage.controller;
 
 import com.example.order.dto.OverTimeDTO;
 import com.example.order.module.user.service.OverTimeService;
-import com.example.order.web.ResultInfo;
+import com.example.order.util.ResultInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

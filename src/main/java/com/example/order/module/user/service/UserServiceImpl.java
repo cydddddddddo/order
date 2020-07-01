@@ -31,4 +31,24 @@ public class UserServiceImpl implements UserService {
     public int insertAllUser(List<UserDTO> userDTOList) {
         return userDao.insertAllUser(userDTOList);
     }
+    @Override
+    public Integer addUser(UserDTO user) {
+        return userDao.addUser(user);
+
+    }
+
+    @Override
+    public Integer updateUser(UserDTO user,String pic) {
+        return userDao.updateUser(user,pic);
+    }
+
+    @Override
+    public List<UserDTO> getUserList(Integer page,Integer limit,String key) {
+        return userDao.getUserList(page,limit,key);
+    }
+
+    @Override
+    public Long getCount(String key) {
+        return userDao.getCount(key);
+    }
 }

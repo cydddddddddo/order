@@ -2,23 +2,18 @@ package com.example.order.module.manage.controller;
 
 import com.example.order.dto.MealDTO;
 import com.example.order.module.user.service.MealService;
-import com.example.order.web.Path;
-import com.example.order.web.ResultInfo;
+import com.example.order.util.Path;
+import com.example.order.util.ResultInfo;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.commons.codec.binary.StringUtils;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
