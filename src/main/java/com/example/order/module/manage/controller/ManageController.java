@@ -25,7 +25,7 @@ public class ManageController {
     @Resource
     private UserService userService;
 
-    @PostMapping("/uploadUerExcle")
+    @PostMapping("/uploadUerExcel")
     @ResponseBody
     public ResultInfo uploadUserExcle(@RequestParam("file") MultipartFile file) throws IOException {
         ResultInfo resultInfo;

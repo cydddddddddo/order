@@ -8,13 +8,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.tomcat.util.buf.UEncoder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,19 +31,19 @@ public class PoiUtil {
             for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){
                 Sheet sheet = workbook.getSheetAt(sheetNum);
                 List<UserDTO> list=getField(sheet);
-                log.info("this list len is {}",list.size());
                 userDTOList.addAll(list);
             }
             workbook.close();
         }
         return userDTOList;
     }
-    public static List<UserDTO> getField(Sheet sheet) throws IOException{
+    public static List<UserDTO> getField(Sheet sheet) {
         if(sheet != null){
             int lastRowNum = sheet.getLastRowNum();
             int id= 0,name= 0,email= 0,sex=0,role=0,group=0;
             Row row=sheet.getRow(0);
-            for(int i=0;i<=lastRowNum;i++) {
+            int lastCellNum= row.getLastCellNum();
+            for(int i=0;i<=lastCellNum;i++) {
                 if(row.getCell(i)==null) {
                     continue;
                 }
@@ -66,7 +62,8 @@ public class PoiUtil {
                 }
                 else if(ss.equals("角色")){
                     role=i;
-                }else if(ss.equals("分组")){
+                }
+                else if(ss.equals("分组")){
                     group=i;
                 }
             }
