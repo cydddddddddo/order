@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Cy
  * @data 2020/6/30 - 0:48
@@ -17,4 +19,10 @@ public interface UserDao {
     UserDTO getUserById(@Param("userId")String userId);
 
     Integer addUser(@Param("user")UserDTO user);
+
+    Integer updateUser(@Param("user")UserDTO user,@Param("pic")String pic);
+
+    List<UserDTO> getUserList(@Param("page")Integer page,@Param("limit")Integer limit,@Param("key")String key);
+
+    Long getCount(@Param("key")String key);
 }

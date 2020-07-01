@@ -11,10 +11,10 @@ public interface Constast {
      * 状态码
      *
      */
-    Integer OK=200;
-    Integer ERROR=-1;
+    String OK="0";
+    String ERROR="1";
 
-    Integer NEW_REAL = 2;
+    String NEW_REAL = "2";
     Integer PASSWORD_ERR = 3;
 
 
@@ -30,4 +30,6 @@ public interface Constast {
 
     String IMAGE_GET_PATH = "/resources/images/";
     String IMAGE_SET_PATH = "D:\\Demo\\order\\src\\main\\resources\\static\\resources\\images\\";
+
+    String IMAGE_DEFAULT = "userface3.jpg";
 }
