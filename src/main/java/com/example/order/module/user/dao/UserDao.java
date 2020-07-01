@@ -18,6 +18,12 @@ public interface UserDao {
 
     UserDTO getUserById(@Param("userId")String userId);
 
+  //ccj
+    List<UserDTO> getAllUser();
+
+    int insertAllUser(@Param("userList") List<UserDTO> userDTOList);
+  //.
+
     Integer addUser(@Param("user")UserDTO user);
 
     Integer updateUser(@Param("user")UserDTO user,@Param("pic")String pic);

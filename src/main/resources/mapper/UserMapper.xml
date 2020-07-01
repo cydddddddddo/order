@@ -19,6 +19,41 @@
             user_id = #{userId}
     </select>
 
+//ccj
+    <select id="getAllUser" resultType="com.example.order.dto.UserDTO">
+        SELECT
+            user_id,
+            user_name,
+            user_role,
+            user_group,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time
+        FROM
+            user
+    </select>
+
+    <insert id="insertAllUser">
+        insert into user(
+            user_id,
+            user_name,
+            user_password,
+            user_group,
+            user_role,
+            user_sex,
+            user_email,
+            user_pic,
+            login_time)
+        values
+        <foreach collection="userList" item="user" separator=",">
+            (#{user.userId},#{user.userName}, #{user.userPassword}, #{user.userGroup},#{user.userRole},#{user.userSex},#{user.userEmail},#{user.userPic},#{user.loginTime})
+        </foreach>
+
+    </insert>
+
+//=======
+
     <insert id="addUser" parameterType="com.example.order.dto.UserDTO">
         INSERT INTO
             user(user_id,user_name,user_password,user_role,user_group,user_sex,user_email,user_pic,login_time)
@@ -86,7 +121,7 @@
         ${(page-1)*limit},${limit}
     </select>
 
-    <select id="getCount" resultType="Long">
+    <select id="getCount" resultType="java.lang.Long">
         SELECT
             COUNT(user_id)
         FROM

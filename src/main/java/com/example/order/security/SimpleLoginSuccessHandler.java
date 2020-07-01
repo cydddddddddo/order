@@ -25,7 +25,6 @@ public class SimpleLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
-
         HttpSession session = request.getSession();
         String code = request.getParameter("code");
         this.redirectStrategy.sendRedirect(request, response, "/login/login");
