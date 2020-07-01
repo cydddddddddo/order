@@ -23,23 +23,86 @@
 <!--    添加申请-->
     <insert id="insertApply" parameterType="com.example.order.dto.Apply">
 
-    insert  into apply (id,date,user_id,status) values (#{id},#{date},#{user_id},0)
+    insert  into apply (id,date,user_id,status) values (#{id},#{date},#{userId},0)
 
 
     </insert>
 
-
-<!--    批准申请-->
-
-    <update id="updateStatusById" parameterType="String" >
-
-        update apply set status =1 where id =#{id}
-    </update>
-
 <!--    选择菜品-->
-    <update id="updateDescriptionById" parameterType="com.example.order.dto.Apply" >
+    <update id="updateDescription"  >
         update  apply set  description=#{description} where id =#{id}
     </update>
+
+
+
+    <!--查询组内成员-->
+    <select id="selectUserIdByGroup"  parameterType="String" resultType="String">
+        select user_id from user where user_group=#{userGroup}
+     </select>
+
+    <!--    组长查询组内今天所有的申请表-->
+    <select id="selectTodayGroup"  parameterType="String" resultType="com.example.order.dto.Apply">
+        select  * from apply where date_format(date,'%Y-%m-%d')= date_format(now(),'%Y-%m-%d')
+        and user_id in
+        <foreach item="item" collection="list"  open="(" separator="," close=")">
+        #{item}
+        </foreach>
+        order by status desc,date desc
+    </select>
+
+
+    <!--    操作申请-->
+
+    <update id="updateStatus" >
+        update apply set status =#{type} where id =#{id}
+    </update>
+
+
+    <!--    批量操作申请-->
+    <update id="updateStatuss" >
+        update apply set status=#{status} where id in
+        <foreach item="item" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+
+
+    <!--    查询(一段时间内)所有(条件)申请表-->
+    <select id="selectAll" resultType="com.example.order.dto.Apply" parameterType="int">
+        select * from apply  where
+        <if test="null!=status">
+             status = #{status}
+        </if>
+        <if test="null!=startTime and null!=endTime">
+            and date_format(date,'%Y-%m-%d') between date_format(#{startTime},'%Y-%m-%d') and date_format(#{endTime},'%Y-%m-%d')
+        </if>
+    </select>
+
+<!--    管理员统计数据,按菜名-->
+    <select id="countByMeal" resultType="com.example.order.dto.CountMeal" >
+    select description,count(*) as `count` from apply where  status = 1 and description is not null
+
+	  <if test="null!=startTime and null!=endTime">
+          and date_format(date,'%Y-%m-%d') between date_format(#{startTime},'%Y-%m-%d') and date_format(#{endTime},'%Y-%m-%d')
+      </if>
+	GROUP BY description order by `count` desc
+
+    </select>
+
+    <!--    管理员统计数据,按组-->
+    <select id="countByGroup" resultType="com.example.order.dto.CountGroup" >
+       	SELECT user_group,count(*) as `count` FROM
+        (select apply.date,user.user_group FROM apply inner JOIN `user` on apply.user_id=`user`.user_id  where status = 1 and apply.user_id is not null ) as t
+        WHERE 1=1 and
+        <if test="null!=startTime and null!=endTime">
+            date_format(date,'%Y-%m-%d') between date_format(#{startTime},'%Y-%m-%d') and date_format(#{endTime},'%Y-%m-%d')
+        </if>
+        GROUP BY user_group order by `count` desc
+
+
+    </select>
+
 
 
 

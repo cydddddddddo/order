@@ -87,7 +87,7 @@ layui.use(['form','element','layer','jquery'],function(){
 
     //用户数量
     $.get("/resources/json/userList.json",function(data){
-        $(".userAll span").text(data.count);
+        $(".userAll span").text(data.CountMeal);
     })
 
     //外部图标
