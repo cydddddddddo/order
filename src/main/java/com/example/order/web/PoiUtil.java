@@ -45,7 +45,7 @@ public class PoiUtil {
     public static List<UserDTO> getField(Sheet sheet) throws IOException{
         if(sheet != null){
             int lastRowNum = sheet.getLastRowNum();
-            int id= 0,name= 0,email= 0,sex=0,role=0;
+            int id= 0,name= 0,email= 0,sex=0,role=0,group=0;
             Row row=sheet.getRow(0);
             for(int i=0;i<=lastRowNum;i++) {
                 if(row.getCell(i)==null) {
@@ -66,6 +66,8 @@ public class PoiUtil {
                 }
                 else if(ss.equals("角色")){
                     role=i;
+                }else if(ss.equals("分组")){
+                    group=i;
                 }
             }
             List<UserDTO> userDTOList=new ArrayList<>();
@@ -90,6 +92,9 @@ public class PoiUtil {
                 }
                 if(row.getCell(role)!=null){
                     userDTO.setUserRole(row.getCell(role).toString().trim());
+                }
+                if(row.getCell(group)!=null){
+                    userDTO.setUserGroup(row.getCell(group).toString().trim());
                 }
                 userDTO.setUserPassword("123");
                 userDTOList.add(userDTO);

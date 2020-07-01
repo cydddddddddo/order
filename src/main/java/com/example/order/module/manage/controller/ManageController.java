@@ -63,6 +63,6 @@ public class ManageController {
     public static void main(String[] args) {
         String p=System.getProperty("user.dir");
         String sepa = java.io.File.separator;
-        System.out.println(sepa);
+        System.out.println(p);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
  * @data 2020/6/30 - 0:48
  */
 public interface UserService {
-    UserDTO getUserById(@Param("userId")String userId);
+    UserDTO getUserById(String userId);
     List<UserDTO> getAllUser();
-    int insertAllUser(@Param("userList") List<UserDTO> userDTOList);
+    int insertAllUser(List<UserDTO> userDTOList);
 }

@@ -1,17 +1,24 @@
 package com.example.order.module.user.dao;
 
-import lombok.Data;
+import com.example.order.dto.OverTimeDTO;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author Chencj
- * @description 补贴方式
+ * @description
  * @date 2020/6/30
  */
-@Data
-public class OverTimeDao {
-    private int id;
-    private Timestamp date;
-    private int type;
+@Repository
+@Mapper
+public interface OverTimeDao {
+    List<OverTimeDTO> findAll();
+    int insert(@Param("overTime")OverTimeDTO overTimeDTO);
+    int updateTypeById(@Param("id")int id,@Param("type")int type);
+    OverTimeDTO findToday(@Param("time")String timestamp);
+    OverTimeDTO findById(@Param("time")int id);
 }

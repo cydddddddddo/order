@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.order.module.user.dao.MealDao">
+    <select id="findAll" resultType="com.example.order.dto.MealDTO">
+        select id,`name`,`description`,`picture`,`status` from meal
+    </select>
+    <select id="findOne" resultType="com.example.order.dto.MealDTO">
+        select id,`name`,`description`,`picture`,`status` from meal
+        where id=#{id}
+    </select>
+    <insert id="insert">
+        insert into meal(id,`name`,`description`,`picture`,`status`)
+        values (#{meal.id},#{meal.name},#{meal.description},#{meal.picture},#{meal.status})
+    </insert>
+    <update id="update">
+        update meal set `name`=#{meal.name},`description`=#{meal.description},`picture`=#{meal.picture}
+        where id=#{meal.id}
+    </update>
+    <update id="updateStatusById">
+        update meal set `status`=#{status}
+        where id=#{id}
+    </update>
+    <delete id="deleteById">
+       delete from meal
+       where id=#{id}
+    </delete>
+</mapper>

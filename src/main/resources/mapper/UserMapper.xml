@@ -6,7 +6,9 @@
         SELECT
             user_id,
             user_name,
+            user_password,
             user_role,
+            user_group,
             user_sex,
             user_email,
             user_pic,
@@ -22,6 +24,7 @@
             user_id,
             user_name,
             user_role,
+            user_group,
             user_sex,
             user_email,
             user_pic,
@@ -35,6 +38,7 @@
             user_id,
             user_name,
             user_password,
+            user_group,
             user_role,
             user_sex,
             user_email,
@@ -42,7 +46,7 @@
             login_time)
         values
         <foreach collection="userList" item="user" separator=",">
-            (#{user.userId},#{user.userName}, #{user.userPassword},#{user.userRole},#{user.userSex},#{user.userEmail},#{user.userPic},#{user.loginTime})
+            (#{user.userId},#{user.userName}, #{user.userPassword}, #{user.userGroup},#{user.userRole},#{user.userSex},#{user.userEmail},#{user.userPic},#{user.loginTime})
         </foreach>
 
     </insert>
