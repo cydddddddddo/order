@@ -19,7 +19,6 @@
             user_id = #{userId}
     </select>
 
-//ccj
     <select id="getAllUser" resultType="com.example.order.dto.UserDTO">
         SELECT
             user_id,
@@ -52,7 +51,6 @@
 
     </insert>
 
-//=======
 
     <insert id="addUser" parameterType="com.example.order.dto.UserDTO">
         INSERT INTO

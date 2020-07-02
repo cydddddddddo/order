@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,8 @@ import java.util.List;
 public class PoiUtil {
     private final static String xls = "xls";
     private final static String xlsx = "xlsx";
+    private final static BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+    private final static String password="123456";
     public static List<UserDTO> readExcel(InputStream io, String fileName) throws IOException {
         checkFile(fileName);
         Workbook workbook = getWorkBook(io,fileName);
@@ -93,7 +96,7 @@ public class PoiUtil {
                 if(row.getCell(group)!=null){
                     userDTO.setUserGroup(row.getCell(group).toString().trim());
                 }
-                userDTO.setUserPassword("123");
+                userDTO.setUserPassword(encoder.encode(password));
                 userDTOList.add(userDTO);
             }
             return userDTOList;
@@ -120,5 +123,9 @@ public class PoiUtil {
             log.warn("解析错误");
         }
         return workbook;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(encoder.encode(password));
     }
 }
