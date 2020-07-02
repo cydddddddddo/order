@@ -3,6 +3,10 @@ package com.example.order.module.manage.controller;
 import com.example.order.module.user.service.MailService;
 import com.example.order.util.ResultInfo;
 import com.example.order.util.VerificationUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +19,7 @@ import javax.annotation.Resource;
  * @date 2020/7/1
  */
 @RestController
+@Api(tags = "公共api")
 public class CommonController {
     @Resource
     private MailService mailService;
@@ -22,6 +27,10 @@ public class CommonController {
     @Resource
     private VerificationUtil verificationUtil;
 
+    @ApiOperation(value = "获取验证码",httpMethod = "GET")
+    @ApiImplicitParams(
+            @ApiImplicitParam(name = "email",value = "用户邮箱",dataType = "String")
+    )
     @GetMapping("/getCode")
     public ResultInfo getCode(@RequestParam("email")String email){
         ResultInfo resultInfo;

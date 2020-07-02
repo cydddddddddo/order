@@ -4,9 +4,7 @@ import com.example.order.dto.MealDTO;
 import com.example.order.module.user.service.MealService;
 import com.example.order.util.Path;
 import com.example.order.util.ResultInfo;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,13 +20,13 @@ import java.util.UUID;
  * @date 2020/6/30
  */
 @RestController
+@Api(tags = "菜品api")
 @RequestMapping("/meal")
 public class MealController {
     @Resource
     private MealService mealService;
 
-    @ApiOperation(value = "post请求调用示例", notes = "查询所有菜品", httpMethod = "GET")
-    @ApiResponses(@ApiResponse(code = 200, message = "处理成功"))
+    @ApiOperation(value = "查询所有菜品",  httpMethod = "GET")
     @GetMapping("/findAll")
     public ResultInfo finAll(){
         ResultInfo resultInfo=ResultInfo.success();
@@ -36,6 +34,12 @@ public class MealController {
         resultInfo.setData(mealDTOList);
         return resultInfo;
     }
+    @ApiOperation(value = "插入菜品",httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "菜品图片", dataType = "MultipartFile"),
+            @ApiImplicitParam(name = "name", value = "菜名", dataType = "String"),
+            @ApiImplicitParam(name = "description", value = "菜品描述", dataType = "String")
+            })
     @PostMapping("/insert")
     public ResultInfo insert(@RequestParam("file") MultipartFile file,@RequestParam("name")String name,@RequestParam("description")String description) throws IOException {
         String id= UUID.randomUUID().toString().replaceAll("-","");
@@ -54,6 +58,10 @@ public class MealController {
         mealService.insert(mealDTO);
         return ResultInfo.success();
     }
+    @ApiOperation(value = "删除菜品",httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "菜品id集合", dataType = "List")
+    })
     @PostMapping("/delete")
     public ResultInfo deleteById(@RequestParam("id")List<String> ids){
         for(String id:ids) {
@@ -65,6 +73,12 @@ public class MealController {
         return ResultInfo.success();
     }
 
+    @ApiOperation(value = "更细菜品文字信息",httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "String"),
+            @ApiImplicitParam(name = "name", value = "菜名", dataType = "String"),
+            @ApiImplicitParam(name = "description", value = "菜品描述", dataType = "String")
+    })
     @PostMapping("/update")
     public ResultInfo update(@RequestParam("name")String name,@RequestParam("description")String description,@RequestParam("id")String id) throws IOException {
         MealDTO mealDTO=mealService.findOne(id);
@@ -73,14 +87,24 @@ public class MealController {
         mealService.update(mealDTO);
         return ResultInfo.success();
     }
+    @ApiOperation(value = "更细菜品状态",httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "String"),
+            @ApiImplicitParam(name = "status", value = "菜品状态 0:失效 1: 有效", dataType = "String")
+    })
     @PostMapping("/updateStatus")
-    public ResultInfo update(@RequestParam("status")String status,@RequestParam("id")String id) throws IOException {
+    public ResultInfo update(@RequestParam("status")String status,@RequestParam("id")String id) {
         mealService.updateStatusById(id,status);
         return ResultInfo.success();
     }
 
-    @PostMapping("/repic")
-    public ResultInfo repic(@RequestParam("file")MultipartFile file,@RequestParam("id")String id) throws IOException {
+    @ApiOperation(value = "更换菜品图片",httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "菜品图片", dataType = "MultipartFile"),
+            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "String"),
+    })
+    @PostMapping("/resetPicture")
+    public ResultInfo resetPicture(@RequestParam("file")MultipartFile file,@RequestParam("id")String id) throws IOException {
         ResultInfo resultInfo;
         MealDTO mealDTO=mealService.findOne(id);
         if(mealDTO==null){
