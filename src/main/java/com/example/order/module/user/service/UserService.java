@@ -22,4 +22,6 @@ public interface UserService {
     List<UserDTO> getUserList(Integer page,Integer limit,String key);
 
     Long getCount(String key);
+
+    Long deleteUser(String userId);
 }

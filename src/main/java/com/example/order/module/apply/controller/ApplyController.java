@@ -4,8 +4,10 @@ package com.example.order.module.apply.controller;
 import com.example.order.dto.Apply;
 import com.example.order.dto.CountGroup;
 import com.example.order.dto.CountMeal;
+import com.example.order.dto.UserDTO;
 import com.example.order.module.apply.service.ApplyService;
 import com.example.order.util.ResultInfo;
+import com.example.order.web.BaseController;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import java.util.Map;
 
 
 @Controller
-public class ApplyController {
+public class ApplyController extends BaseController {
 
     @Autowired
     ApplyService applyService;
@@ -46,20 +48,23 @@ public class ApplyController {
     }
 
 
-    @RequestMapping("updateDescription" )
+    @RequestMapping("/updateDescription" )
     @ResponseBody
-    public  ResultInfo updateDescription(String id, String description ){
+    public  ResultInfo updateDescription(String id, String description){
 
         return  applyService.updateDescription(id,description);
     }
 
 
     //组长查看今天的申请
-    @RequestMapping("todayGroupApply")
+    @RequestMapping("/todayGroupApply")
     @ResponseBody
-    public  ResultInfo selectGroupApply(String userGroup,Integer page,Integer limit){
+    public  ResultInfo selectGroupApply(Integer page,Integer limit){
+
+        UserDTO user = this.getCurrentUser();
+
         PageHelper.startPage(page,limit);
-        List<Apply> applyList =applyService.selectGroupApply(userGroup);
+        List<Apply> applyList =applyService.selectGroupApply(user.getUserGroup());
         PageInfo<Apply> applyPageInfo = new PageInfo<>(applyList);
 
         ResultInfo resultInfo=ResultInfo.success();

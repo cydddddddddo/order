@@ -87,7 +87,7 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public List<Apply> selectGroupApply(String userGroup) {
-        List<String> userIds =applyDao.selectUserIdByGroup(userGroup);
+        List<String> userIds = applyDao.selectUserIdByGroup(userGroup);
         return  applyDao.selectTodayGroup(userIds);
     }
 

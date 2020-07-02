@@ -23,8 +23,6 @@ public class ResultInfo {
     private String code;
     @ApiModelProperty(example="提示信息")
 //=======
-public class ResultInfo {
-    private String code;
 
     private String msg;
     private Object data;

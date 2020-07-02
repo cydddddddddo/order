@@ -19,7 +19,7 @@
             user_id = #{userId}
     </select>
 
-//ccj
+<!--ccj-->
     <select id="getAllUser" resultType="com.example.order.dto.UserDTO">
         SELECT
             user_id,
@@ -52,7 +52,7 @@
 
     </insert>
 
-//=======
+<!--//=======-->
 
     <insert id="addUser" parameterType="com.example.order.dto.UserDTO">
         INSERT INTO
@@ -135,4 +135,11 @@
             CONCAT('%',#{key},'%')
         </if>
     </select>
+
+    <delete id="deleteUser" parameterType="java.lang.String">
+        DELETE FROM
+            user
+        WHERE
+            user_id = #{userId}
+    </delete>
 </mapper>

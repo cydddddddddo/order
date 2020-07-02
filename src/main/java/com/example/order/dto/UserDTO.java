@@ -40,4 +40,7 @@ public class UserDTO implements Serializable {
     public String getUserPic(){
         return Constast.IMAGE_GET_PATH +userPic;
     }
+    public void setUserPic(String pic){
+        this.userPic = pic;
+    }
 }

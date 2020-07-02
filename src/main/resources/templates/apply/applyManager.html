@@ -16,28 +16,26 @@
 <form class="layui-form">
     <blockquote class="layui-elem-quote quoteBox">
         <form class="layui-form">
+
             <div class="layui-inline">
-                <div class="layui-input-inline">
-                    <input type="text" id="seek" class="layui-input searchVal" placeholder="请输入搜索的内容" />
-                </div>
-                <a class="layui-btn search_btn" data-type="reload">搜索</a>
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量允许</a>
             </div>
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量拒绝</a>
             </div>
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-green layui-btn-normal" href="/user/add">单个添加</a>
+                <a class="layui-btn layui-btn-green layui-btn-normal" href="/user/add">申请加班</a>
             </div>
-            <div class="layui-inline layui-upload-list">
+            <!--<div class="layui-inline layui-upload-list">
                 <a class="layui-btn layui-btn-green uploadBtn">批量添加</a>
-            </div>
+            </div>-->
         </form>
     </blockquote>
-    <table id="userList" lay-filter="userList"></table>
+    <table id="applyList" lay-filter="applyList"></table>
 
-<!--
-    <script type="text/html" id="switchTpl"></script>
--->
+    <!--
+        <script type="text/html" id="switchTpl"></script>
+    -->
 
 </form>
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
@@ -53,35 +51,34 @@
 
 
         var tableIns = table.render({
-            elem: '#userList',
-            url : '/user/list',
+            elem: '#applyList',
+            url : '/todayGroupApply',
             cellMinWidth : 50,
             page : true,
             height : "full-125",
             limit : 10,
             limits : [10,15,20,25],
-            id : "userListTable",
+            id : "applyListTable",
             cols : [
                 [
                     {type: "checkbox", fixed:"left", width:50},
-                    {field: 'userId',title: "员工号",width: 100,align: 'center',sort: true},
-                    {field: 'userRole', title: '角色',align: 'center',width: 120,sort:true,edit:'text'},
-                    {field: 'userName', title: '姓名',align: 'center',width: 110,sort:true,edit:'text'},
-                    {field: 'userGroup', title: '组别',align: 'center', width:110,edit:'text'},
-                    {field: 'userSex', title: '性别',width: 170,align: 'center',sort: true,edit:'text'},
-                    {field: 'userEmail',title: '邮箱',width: 170,align: 'center',sort: true,edit:'text'}
+                    {field: 'id',title: "审批号",width: 100,align: 'center',sort: true},
+                    {field: 'date', title: '申请时间',align: 'center',width: 120,sort:true},
+                    {field: 'userId', title: '员工号',align: 'center',width: 110,sort:true},
+                    {field: 'status', title: '状态',width: 170,align: 'center',sort: true},
+                    {field: 'description',title: '说明',width: 170,align: 'center',sort: true}
                 ]
             ]
             ,parseData:function (res) {
                 return{
                     "code":res.code,
                     "count":res.data.count,
-                    "data":res.data.list
+                    "data":res.data.info
                 }
             }
         });
 
-        upload.render({
+       /* upload.render({
             elem: '.uploadBtn',
             url:'/uploadUerExcel',
             accept:'file',
@@ -90,9 +87,9 @@
                     layer.msg("上传成功！")
                 }
             }
-        })
+        })*/
 
-        table.on('edit(userList)',function (obj) {
+      /*  table.on('edit(applyList)',function (obj) {
             var value = obj.value,
                 data = obj.data,
                 field = obj.field;
@@ -105,17 +102,17 @@
             },function (data) {
                 layer.msg(data.msg);
             })
-        });
+        });*/
 
-       /* table.on('rowDouble(userList)',function (obj) {
-            window.location = "/exchange/particulars/"+obj.data.id;
-        })*/
+        /* table.on('rowDouble(applyList)',function (obj) {
+             window.location = "/exchange/particulars/"+obj.data.id;
+         })*/
 
         //搜索
-        $(".search_btn").on("click",function(){
+        /*$(".search_btn").on("click",function(){
             if($(".searchVal").val() != ''){
                 alert($(".searchVal").val());
-                table.reload("userListTable",{
+                table.reload("applyListTable",{
                     page: {
                         curr: 1 //重新从第 1 页开始
                     },
@@ -127,10 +124,10 @@
                 layer.msg("请输入搜索的内容");
             }
         });
-
+*/
         //批量删除
         $(".delAll_btn").click(function(){
-            var checkStatus = table.checkStatus('userListTable'),
+            var checkStatus = table.checkStatus('applyListTable'),
                 data = checkStatus.data,
                 deleteId = [];
             if(data.length > 0) {

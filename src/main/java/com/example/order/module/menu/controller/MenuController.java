@@ -7,7 +7,7 @@ import com.example.order.util.Constast;
 import com.example.order.util.TreeNode;
 import com.example.order.util.TreeNodeBuilder;
 import com.example.order.web.BaseController;
-import com.example.order.web.ResultInfo;
+import com.example.order.util.ResultInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

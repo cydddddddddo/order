@@ -17,7 +17,6 @@ import java.util.List;
 public interface UserDao {
 
     UserDTO getUserById(@Param("userId")String userId);
-
   //ccj
     List<UserDTO> getAllUser();
 
@@ -31,4 +30,6 @@ public interface UserDao {
     List<UserDTO> getUserList(@Param("page")Integer page,@Param("limit")Integer limit,@Param("key")String key);
 
     Long getCount(@Param("key")String key);
+
+    Long deleteUser(@Param("userId")String userId);
 }
