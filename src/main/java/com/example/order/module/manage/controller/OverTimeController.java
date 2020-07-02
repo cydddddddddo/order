@@ -35,7 +35,7 @@ public class OverTimeController {
     @ApiOperation(value = "插入补贴",httpMethod = "POST")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "time", value = "补贴时间  格式 2019-01-01", dataType = "String"),
-            @ApiImplicitParam(name = "type", value = "补贴方式 1: 加班餐 2：加班费", dataType = "String")
+            @ApiImplicitParam(name = "type", value = "补贴方式 1: 加班餐 2：加班费", dataType = "Integer")
     })
     @PostMapping("/insert")
     public ResultInfo insert(@RequestParam("time")String time,@RequestParam("type")int type){
