@@ -14,8 +14,8 @@ import java.util.List;
 public interface MealService {
     List<MealDTO> findAll();
     int insert(MealDTO mealDTO);
-    void deleteById(String id);
+    void deleteById(Integer id);
     int update(MealDTO mealDTO);
-    int updateStatusById(String id,String status);
-    MealDTO findOne(String id);
+    int updateStatusById(Integer id,String status);
+    MealDTO findOne(Integer id);
 }

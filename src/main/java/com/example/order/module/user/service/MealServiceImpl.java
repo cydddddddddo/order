@@ -27,7 +27,7 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(Integer id) {
          mealDao.deleteById(id);
     }
     @Override
@@ -36,12 +36,12 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public int updateStatusById(String id, String status) {
+    public int updateStatusById(Integer id, String status) {
         return mealDao.updateStatusById(id, status);
     }
 
     @Override
-    public MealDTO findOne(String id) {
+    public MealDTO findOne(Integer id) {
         return mealDao.findOne(id);
     }
 }

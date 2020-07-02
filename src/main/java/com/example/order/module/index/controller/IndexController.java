@@ -25,6 +25,13 @@ public class IndexController extends BaseController {
         return "system/index/index";
     }
 
+    @RequestMapping("sys/reset")
+    public String toReset(Model model){
+        UserDTO user = this.getCurrentUser();
+        model.addAttribute("user",user);
+        return "system/index/reset";
+    }
+
     @RequestMapping("sys/toDesk")
     public String toDesk(Model model){
         return "system/index/demo";

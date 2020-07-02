@@ -58,13 +58,13 @@ public class MealController {
         mealService.insert(mealDTO);
         return ResultInfo.success();
     }
-    @ApiOperation(value = "删除菜品",httpMethod = "POST")
+    @ApiOperation(value = "删除菜品",httpMethod = "GET")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "菜品id集合", dataType = "List")
     })
-    @PostMapping("/delete")
-    public ResultInfo deleteById(@RequestParam("id")List<String> ids){
-        for(String id:ids) {
+    @GetMapping("/delete")
+    public ResultInfo deleteById(@RequestParam("ids") List<Integer> ids){
+        for(Integer id:ids) {
             MealDTO mealDTO = mealService.findOne(id);
             File file = new File(Path.derectory + Path.separator + mealDTO.getPicture());
             file.delete();
@@ -75,12 +75,12 @@ public class MealController {
 
     @ApiOperation(value = "更细菜品文字信息",httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "Integer"),
             @ApiImplicitParam(name = "name", value = "菜名", dataType = "String"),
             @ApiImplicitParam(name = "description", value = "菜品描述", dataType = "String")
     })
     @PostMapping("/update")
-    public ResultInfo update(@RequestParam("name")String name,@RequestParam("description")String description,@RequestParam("id")String id) throws IOException {
+    public ResultInfo update(@RequestParam("name")String name,@RequestParam("description")String description,@RequestParam("id")Integer id) throws IOException {
         MealDTO mealDTO=mealService.findOne(id);
         mealDTO.setDescription(description);
         mealDTO.setName(name);
@@ -89,11 +89,11 @@ public class MealController {
     }
     @ApiOperation(value = "更细菜品状态",httpMethod = "POST")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "Integer"),
             @ApiImplicitParam(name = "status", value = "菜品状态 0:失效 1: 有效", dataType = "String")
     })
     @PostMapping("/updateStatus")
-    public ResultInfo update(@RequestParam("status")String status,@RequestParam("id")String id) {
+    public ResultInfo update(@RequestParam("status")String status,@RequestParam("id")Integer id) {
         mealService.updateStatusById(id,status);
         return ResultInfo.success();
     }
@@ -101,10 +101,10 @@ public class MealController {
     @ApiOperation(value = "更换菜品图片",httpMethod = "POST")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "菜品图片", dataType = "MultipartFile"),
-            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "String"),
+            @ApiImplicitParam(name = "id", value = "菜品id", dataType = "Integer"),
     })
     @PostMapping("/resetPicture")
-    public ResultInfo resetPicture(@RequestParam("file")MultipartFile file,@RequestParam("id")String id) throws IOException {
+    public ResultInfo resetPicture(@RequestParam("file")MultipartFile file,@RequestParam("id")Integer id) throws IOException {
         ResultInfo resultInfo;
         MealDTO mealDTO=mealService.findOne(id);
         if(mealDTO==null){

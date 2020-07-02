@@ -12,6 +12,8 @@ import java.util.List;
 public interface UserService {
     UserDTO getUserById(String userId);
 
+    UserDTO getUserByEmail(String email);
+
     List<UserDTO> getAllUser();
     int insertAllUser(List<UserDTO> userDTOList);
 

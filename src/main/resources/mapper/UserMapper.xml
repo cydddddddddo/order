@@ -19,6 +19,17 @@
             user_id = #{userId}
     </select>
 
+    <select id="getUserByEmail" resultType="com.example.order.dto.UserDTO">
+        SELECT
+            user_id,
+            user_name,
+            user_password
+        FROM
+            user
+        WHERE
+            user_email = #{email}
+    </select>
+
     <select id="getAllUser" resultType="com.example.order.dto.UserDTO">
         SELECT
             user_id,

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>中电万维订餐系统</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="/resources/favicon.ico">
+	<link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="/resources/css/index.css" media="all" />
+</head>
+<body >
+<div class="register-container">
+<form class="layui-form" style="height: auto" id="recordForm">
+	<div class="layui-form-item input-item">
+		<label for="email">邮箱</label>
+		<input type="text" placeholder="请输入用户邮箱" autocomplete="off" name="email" id="email" class="layui-input" lay-verify="required">
+	</div>
+	<div class="layui-form-item input-item">
+		<label for="password">新密码</label>
+		<input type="password" placeholder="请输入密码" autocomplete="off" name="password" id="password" class="layui-input" lay-verify="required">
+	</div>
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<div class="layui-input-inline">
+				<input type="text" name="code" lay-verify="code" autocomplete="off" class="layui-input">
+			</div>
+		</div>
+		<div class="layui-inline">
+			<button type="button" class="layui-btn" id="getCode">获取验证码</button>
+		</div>
+	</div>
+	<div class="layui-form-item">
+		<button type="button" class="layui-btn" style="width: 100%" id="confirm">确定</button>
+	</div>
+	<div class="layui-form-item" style="float: right">
+		<a href="/sys/toLogin" style="color: #1E9FFF">返回登陆</a>
+	</div>
+</form>
+</div>
+
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script type="text/javascript">
+	var $,form,element,layer;
+	layui.config({
+		base : "/resources/js/"
+	}).extend({
+		"bodyTab" : "bodyTab"
+	})
+	layui.use(['bodyTab','form','element','layer','jquery'],function(){
+		        form = layui.form,
+				layer = layui.layer,
+				element=layui.element,
+				$=layui.jquery;
+		$(document).on('click','#getCode',function(){
+			let d = {};
+			let t = $('#recordForm [name]').serializeArray();
+			$.each(t, function() {
+				d[this.name] = this.value;
+			});
+			$.get("/getCode",{
+				email:d.email,
+			},function (res) {
+				if(res!=null){
+					if(res.code=='0'){
+						layer.msg('验证码发送成功');
+					}
+					else{
+						layer.msg('验证码发送失败');
+					}
+				}
+			})
+		});
+		$(document).on('click','#confirm',function(){
+			let d = {};
+			let t = $('#recordForm [name]').serializeArray();
+			$.each(t, function() {
+				d[this.name] = this.value;
+			});
+			$.post("/updatePassword",{
+				email:d.email,
+				code:d.code,
+				password:d.password
+			},function (res) {
+				if(res!=null){
+					if(res.code=='0'){
+						layer.msg('修改成功');
+					}
+					else{
+						layer.msg('修改失败');
+					}
+				}
+			})
+		});
+	});
+</script>
+<style>
+	.register-container {
+		border-radius: 15px;
+		background-clip: padding-box;
+		width: 500px;
+		height: auto;
+		margin:100px auto ;
+		padding: 35px 35px 15px 35px;
+		background: #fff;
+		border: 1px solid #eaeaea;
+		box-shadow: 0 0 25px #cac6c6;
+	}
+</style>
+</body>
+</html>
