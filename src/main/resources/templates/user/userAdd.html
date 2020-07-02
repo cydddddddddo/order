@@ -11,147 +11,57 @@
 </head>
 <body>
 
-<!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-    <legend>赋值和取值</legend>
-</fieldset>
-
-<form class="layui-form" action="" lay-filter="example">
-    <div class="layui-form-item">
-        <label class="layui-form-label">输入框</label>
-        <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">密码框</label>
-        <div class="layui-input-block">
-            <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">选择框</label>
-        <div class="layui-input-block">
-            <select name="interest" lay-filter="aihao">
-                <option value=""></option>
-                <option value="0">写作</option>
-                <option value="1">阅读</option>
-                <option value="2">游戏</option>
-                <option value="3">音乐</option>
-                <option value="4">旅行</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">复选框</label>
-        <div class="layui-input-block">
-            <input type="checkbox" name="like[write]" title="写作">
-            <input type="checkbox" name="like[read]" title="阅读">
-            <input type="checkbox" name="like[daze]" title="发呆">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">开关</label>
-        <div class="layui-input-block">
-            <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">单选框</label>
-        <div class="layui-input-block">
-            <input type="radio" name="sex" value="男" title="男" checked="">
-            <input type="radio" name="sex" value="女" title="女">
-        </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">文本域</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
-        </div>
-    </div>
-
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">赋值</button>
-            <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-getval">取值</button>
-            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-        </div>
-    </div>
-</form>-->
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
     <legend>新增用户</legend>
 </fieldset>
 <form class="layui-form layui-form-pane" style="margin-left: 5%" action="">
     <div class="layui-form-item">
-        <label class="layui-form-label">登陆账号</label>
+        <label class="layui-form-label">员工号</label>
         <div class="layui-input-inline">
-            <input type="text" name="name" autocomplete="off" lay-reqText="请输入账号" lay-verify="required|name"
+            <input type="text" name="userId" autocomplete="off" lay-reqText="请输入员工号" lay-verify="required|name"
                    class="layui-input">
         </div>
         <label class="layui-form-label">密码</label>
         <div class="layui-input-inline">
-            <input type="password" name="password" autocomplete="off" lay-reqText="请输入密码" lay-verify="required"
+            <input type="password" name="userPassword" autocomplete="off" lay-reqText="请输入密码" lay-verify="required"
                    class="layui-input">
         </div>
         <label class="layui-form-label">姓名</label>
         <div class="layui-input-inline">
-            <input type="text" name="nickName" autocomplete="off" lay-reqText="请输入姓名" lay-verify="required"
+            <input type="text" name="userName" autocomplete="off" lay-reqText="请输入姓名" lay-verify="required"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">身份</label>
+        <label class="layui-form-label">角色</label>
         <div class="layui-input-inline">
-            <select name="role">
-                <option value="ROLE_stu">同学</option>
-                <option value="ROLE_tea">老师</option>
+            <select name="userRole">
+                <option value="ROLE_mem">组员</option>
+                <option value="ROLE_lea">组长</option>
                 <option value="ROLE_man">管理</option>
             </select>
         </div>
-        <label class="layui-form-label">年级</label>
+        <label class="layui-form-label">性别</label>
         <div class="layui-input-inline">
-            <!--lay-verify="required" placeholder="请输入年级"-->
-            <input type="text" name="grade" autocomplete="off" class="layui-input">
-        </div>
-        <label class="layui-form-label">学院</label>
-        <div class="layui-input-inline">
-            <select name="college">
-                <!--  <option value="">谁可以看到</option>-->
-                <option value="通信与信息工程学院">通信与信息工程</option>
-                <option value="计算机科学与技术学院">计算机科学与技术</option>
-                <option value="自动化学院">自动化</option>
-                <option value="先进制造工程学院">先进制造工程</option>
-                <option value="光电工程学院/国际半导体学院">光电工程学院/国际半导体</option>
-                <option value="软件工程学院">软件工程</option>
-                <option value="生物信息学院">生物信息</option>
-                <option value="理学院">理学院</option>
-                <option value="经济管理学院">经济管理</option>
-                <option value="传媒艺术学院">传媒艺术</option>
-                <option value="经济管理学院">经济管理</option>
-                <option value="外国语学院">外国语学院</option>
-                <option value="国际学院">国际学院</option>
-                <option value="网络空间安全与信息法学院">网络空间安全与信息法学院</option>
-                <option value="马克思主义学院">马克思主义学院</option>
-                <option value="体育学院">体育学院</option>
+            <select name="userSex" class="userSex">
+                <option value="man">男</option>
+                <option value="woman">女</option>
             </select>
+        </div>
+        <label class="layui-form-label">组别</label>
+        <div class="layui-input-inline">
+            <input type="text" name="userGroup" autocomplete="off" lay-reqText="请确认组别" lay-verify="required"
+                   class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">邮箱</label>
         <div class="layui-input-inline">
-            <input type="email" name="email" autocomplete="off" class="layui-input">
+            <input type="email" name="userEmail" autocomplete="off" class="layui-input">
         </div>
     </div>
 
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">个人简介</label>
-        <div class="layui-input-block">
-            <textarea name="synopsis" placeholder="请输入内容" class="layui-textarea"></textarea>
-        </div>
-    </div>
+
     <div class="layui-form-item">
         <button class="layui-btn" lay-submit="" lay-filter="demo2">提交</button>
     </div>
@@ -178,7 +88,7 @@
                 }
             }
             , pass: [
-                /^[\S]{6,12}$/
+                /^[\S]{3,12}$/
                 , '密码必须6到12位，且不能出现空格'
             ]
             , content: function (value) {

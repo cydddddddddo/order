@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.order.module.menu.dao.MenuDao">
+    <select id="getMenuByType" resultType="com.example.order.dto.Menu">
+        SELECT
+            id,pid,type,title,percode,icon,href,open,available
+        FROM
+            permission
+        WHERE
+            type = #{type}
+        AND
+            percode = #{percode}
+        OR
+            percode = 0
+    </select>
+</mapper>

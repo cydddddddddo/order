@@ -19,7 +19,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
-                <input type="text" th:value="${member.getNickName()}" disabled class="layui-input layui-disabled">
+                <input type="text" th:value="${user.getUserName()}" disabled class="layui-input layui-disabled">
             </div>
         </div>
         <div class="layui-form-item">
@@ -66,8 +66,8 @@
                 }
             },*/
             newPwd : function(value, item){
-                if(value.length < 6){
-                    return "密码长度不能小于6位";
+                if(value.length < 2){
+                    return "密码长度不能小于2位";
                 }
             },
             oldPwd : function(value,item){
@@ -101,7 +101,7 @@
                     if (newPwd!=""&&oldPwd!=""&&realPwd!=""&&data.code!=2){
                         layer.msg(data.msg);
                     }
-                    if (data.code==200){
+                    if (data.code==0){
                         top.location.href="/sys/toLogin"
                     }
                 },

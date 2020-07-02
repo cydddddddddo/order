@@ -23,6 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+//ccj
     public List<UserDTO> getAllUser() {
         return userDao.getAllUser();
     }
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserService {
     public int insertAllUser(List<UserDTO> userDTOList) {
         return userDao.insertAllUser(userDTOList);
     }
+  
+    
+//=======
     @Override
     public Integer addUser(UserDTO user) {
         return userDao.addUser(user);
