@@ -4,6 +4,10 @@ import com.example.order.dto.UserDTO;
 import com.example.order.module.user.service.UserService;
 import com.example.order.util.PoiUtil;
 import com.example.order.util.ResultInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +23,7 @@ import java.util.List;
  * @date 2020/6/30
  */
 @Slf4j
+@Api(tags = "管理员api")
 @Controller
 public class ManageController {
 
@@ -26,6 +31,10 @@ public class ManageController {
     private UserService userService;
 
     @PostMapping("/uploadUerExcel")
+    @ApiOperation(value = "上传员工excel",httpMethod = "POST")
+    @ApiImplicitParams(
+            @ApiImplicitParam(name = "file",value = "excel文件",dataType = "MultipartFile")
+    )
     @ResponseBody
     public ResultInfo uploadUserExcle(@RequestParam("file") MultipartFile file) throws IOException {
         ResultInfo resultInfo;
@@ -43,6 +52,10 @@ public class ManageController {
     }
 
     @GetMapping("/findOne")
+    @ApiOperation(value = "查询单个员工",httpMethod = "GET")
+    @ApiImplicitParams(
+            @ApiImplicitParam(name = "id",value = "员工工号",dataType = "String")
+    )
     @ResponseBody
     public ResultInfo findOne(@RequestParam("id")String id){
         ResultInfo resultInfo=ResultInfo.success();
@@ -52,6 +65,7 @@ public class ManageController {
     }
 
     @GetMapping("/findAll")
+    @ApiOperation(value = "查询所有员工",httpMethod = "GET")
     @ResponseBody
     public ResultInfo findAll(){
         ResultInfo resultInfo=ResultInfo.success();

@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/sys/toLogin").permitAll()
+                .antMatchers("/","/sys/toLogin","/**").permitAll()
                 .anyRequest().authenticated();
 
         //关闭csrf
@@ -79,8 +79,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //认证
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-        // .withUser("dmxy").password(new BCryptPasswordEncoder().encode("1234")).roles("..");
         auth.userDetailsService(customUserDetailsService()).passwordEncoder(passwordEncoder());
     }
 }
