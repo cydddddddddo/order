@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//ccj
+
     public List<UserDTO> getAllUser() {
         return userDao.getAllUser();
     }
