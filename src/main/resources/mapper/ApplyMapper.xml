@@ -41,9 +41,11 @@
      </select>
 
     <!--    组长查询组内今天所有的申请表-->
-    <select id="selectTodayGroup"  parameterType="String" resultType="com.example.order.dto.Apply">
-        select  * from apply where date_format(date,'%Y-%m-%d')= date_format(now(),'%Y-%m-%d')
-        and user_id in
+    <select id="selectTodayGroup"  parameterType="String" resultType="com.example.order.dto.UserApply">
+        select  apply.*,`user`.* from apply inner join `user`
+        on apply.user_id=`user`.user_id
+        where date_format(date,'%Y-%m-%d')= date_format(now(),'%Y-%m-%d')
+        and apply.user_id in
         <foreach item="item" collection="list"  open="(" separator="," close=")">
         #{item}
         </foreach>

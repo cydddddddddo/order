@@ -4,6 +4,7 @@ package com.example.order.module.apply.service;
 import com.example.order.dto.Apply;
 import com.example.order.dto.CountGroup;
 import com.example.order.dto.CountMeal;
+import com.example.order.dto.UserApply;
 import com.example.order.util.ResultInfo;
 
 import java.sql.Timestamp;
@@ -21,7 +22,7 @@ public interface ApplyService {
 
     ResultInfo updateStatuss(String[] ids, int type);
 
-    List<Apply> selectGroupApply(String userGroup);
+    List<UserApply> selectGroupApply(String userGroup);
 
 
     List<CountMeal> CountByMeal(Timestamp startTime, Timestamp endTime);

@@ -3,6 +3,7 @@ package com.example.order.module.apply.serviceImpl;
 import com.example.order.dto.Apply;
 import com.example.order.dto.CountGroup;
 import com.example.order.dto.CountMeal;
+import com.example.order.dto.UserApply;
 import com.example.order.module.apply.dao.ApplyDao;
 import com.example.order.module.apply.service.ApplyService;
 import com.example.order.util.RandomUtil;
@@ -86,7 +87,7 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public List<Apply> selectGroupApply(String userGroup) {
+    public List<UserApply> selectGroupApply(String userGroup) {
         List<String> userIds =applyDao.selectUserIdByGroup(userGroup);
         return  applyDao.selectTodayGroup(userIds);
     }

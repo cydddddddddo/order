@@ -4,6 +4,7 @@ package com.example.order.module.apply.controller;
 import com.example.order.dto.Apply;
 import com.example.order.dto.CountGroup;
 import com.example.order.dto.CountMeal;
+import com.example.order.dto.UserApply;
 import com.example.order.module.apply.service.ApplyService;
 import com.example.order.util.ResultInfo;
 import com.github.pagehelper.PageHelper;
@@ -59,8 +60,8 @@ public class ApplyController {
     @ResponseBody
     public  ResultInfo selectGroupApply(String userGroup,Integer page,Integer limit){
         PageHelper.startPage(page,limit);
-        List<Apply> applyList =applyService.selectGroupApply(userGroup);
-        PageInfo<Apply> applyPageInfo = new PageInfo<>(applyList);
+        List<UserApply> applyList =applyService.selectGroupApply(userGroup);
+        PageInfo<UserApply> applyPageInfo = new PageInfo<>(applyList);
 
         ResultInfo resultInfo=ResultInfo.success();
         Map <String,Object>map=new HashMap();
