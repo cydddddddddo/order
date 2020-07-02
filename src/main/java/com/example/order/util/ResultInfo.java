@@ -13,7 +13,7 @@ import lombok.Data;
  * @date 2020/2/7
  */
 
-//zcj
+
 @AllArgsConstructor
 @Data
 @Builder(toBuilder = true)
@@ -22,10 +22,6 @@ public class ResultInfo {
     @ApiModelProperty(example="0")
     private String code;
     @ApiModelProperty(example="提示信息")
-//=======
-public class ResultInfo {
-    private String code;
-
     private String msg;
     private Object data;
 
