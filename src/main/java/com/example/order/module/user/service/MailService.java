@@ -15,7 +15,7 @@ public class MailService {
      JavaMailSender javaMailSender;
 	 public void sendSimpleMail(String from,String to,String cc,String subject,String content) {
 		 SimpleMailMessage msg=new SimpleMailMessage();
-		 msg.setFrom("点餐平台<1490251259@qq.com>");
+		 msg.setFrom("点餐平台<321831788@qq.com>");
 		 msg.setTo(to);
 		 msg.setSubject(subject);
 		 msg.setText(content);
