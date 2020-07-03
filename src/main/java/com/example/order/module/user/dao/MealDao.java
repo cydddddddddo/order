@@ -17,8 +17,8 @@ import java.util.List;
 public interface MealDao{
     List<MealDTO> findAll();
     int insert(@Param("meal")MealDTO mealDTO);
-    void deleteById(@Param("id")String id);
+    void deleteById(@Param("id")Integer id);
     int update(@Param("meal")MealDTO mealDTO);
-    int updateStatusById(@Param("id")String id,@Param("status")String status);
-    MealDTO findOne(@Param("id")String id);
+    int updateStatusById(@Param("id")Integer id,@Param("status")String status);
+    MealDTO findOne(@Param("id")Integer id);
 }

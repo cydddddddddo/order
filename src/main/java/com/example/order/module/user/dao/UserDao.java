@@ -17,11 +17,12 @@ import java.util.List;
 public interface UserDao {
 
     UserDTO getUserById(@Param("userId")String userId);
-  //ccj
+
+    UserDTO getUserByEmail(@Param("email")String email);
+
     List<UserDTO> getAllUser();
 
     int insertAllUser(@Param("userList") List<UserDTO> userDTOList);
-  //.
 
     Integer addUser(@Param("user")UserDTO user);
 

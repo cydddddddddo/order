@@ -11,10 +11,12 @@ import java.util.List;
  */
 public interface UserService {
     UserDTO getUserById(String userId);
-//ccj
+
+    UserDTO getUserByEmail(String email);
+
     List<UserDTO> getAllUser();
     int insertAllUser(List<UserDTO> userDTOList);
-//=======
+
     Integer addUser(UserDTO user);
 
     Integer updateUser(UserDTO user,String pic);

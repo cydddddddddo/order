@@ -27,6 +27,27 @@ public class IndexController extends BaseController {
         return "system/index/index";
     }
 
+    @RequestMapping("sys/reset")
+    public String toReset(Model model){
+        UserDTO user = this.getCurrentUser();
+        model.addAttribute("user",user);
+        return "system/index/reset";
+    }
+
+    @RequestMapping("sys/meal")
+    public String toMeal(Model model){
+        UserDTO user = this.getCurrentUser();
+        model.addAttribute("user",user);
+        return "system/index/meal";
+    }
+
+    @RequestMapping("sys/apply")
+    public String toApply(Model model){
+        UserDTO user = this.getCurrentUser();
+        model.addAttribute("user",user);
+        return "system/index/apply";
+    }
+
     @RequestMapping("sys/toDesk")
     public String toDesk(Model model){
         return "system/index/demo";
