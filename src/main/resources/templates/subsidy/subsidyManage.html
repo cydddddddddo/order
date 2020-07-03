@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>帖子列表--毕业生生涯追踪系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" contentda="telephone=no">
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/resources/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+   <!-- <blockquote class="layui-elem-quote quoteBox">
+        &lt;!&ndash;<form class="layui-form">
+
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量删除</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-green layui-btn-normal" href="/user/add">单个添加</a>
+            </div>
+            <div class="layui-inline layui-upload-list">
+                <a class="layui-btn layui-btn-green uploadBtn">批量添加</a>
+            </div>
+        </form>&ndash;&gt;
+    </blockquote>-->
+    <table id="userList" lay-filter="userList"></table>
+
+
+    <script type="text/html" id="getType">
+        <div class="layui-form-item">
+            <a  href="javascript:void(0)" lay-event="radio1click">
+                <input type="radio" name="type_{{d.id}}" value="加班餐" title="加班餐" class="food" lay-filter="rdo1" {{d.type=="1"?"checked":""}}>
+            </a>
+            <a  href="javascript:void(0)" lay-event="radio2click">
+                <input type="radio" name="type_{{d.id}}" value="加班费" title="加班费" class="money" lay-filter="rdo2" {{d.type=="0"?"checked":""}}>
+            </a>
+        </div>
+    </script>
+
+<!--        <input type="checkbox" name="lock" value="{{d.id}}" title="锁定" lay-filter="lockDemo"
+            {{ d.id == 10006 ? 'checked' : '' }}>-->
+
+
+
+
+</form>
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','laydate','upload','table','laytpl'],function(){
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            laydate = layui.laydate,
+            laytpl = layui.laytpl,
+            upload = layui.upload,
+            table = layui.table;
+
+
+        var tableIns = table.render({
+            elem: '#userList',
+            url : '/overTime/findAll',
+            height : "",
+            width:"380",
+            id : "userListTable",
+            cols : [
+                [
+                    // {type: "checkbox", fixed:"left", width:50},
+                    {field: 'id',title: "编号",width: 100,align: 'center',sort: true},
+                    {field: 'date', title: '时间',align: 'center',width: 120,sort:true},
+                    {field: 'type', title: '类型',align: 'center',sort:true,toolbar:'#getType'},
+                ]
+            ]
+            /*,parseData:function (res) {
+                return{
+                    "code":res.code,
+                    "count":res.data.count,
+                    "data":res.data.list
+                }
+            }*/
+        });
+
+        /* table.on('rowDouble(userList)',function (obj) {
+             window.location = "/exchange/particulars/"+obj.data.id;
+         })*/
+
+
+
+        form.on('radio(rdo1)',function (data) {
+            //layer.msg(data.value);
+            var type = data.value;
+            var id = data.elem.name.substring(5);
+            layer.msg(id);
+            if (type=="加班餐"){
+                type = 1;
+            }else if (type=="加班费"){
+                type = 0;
+            };
+            $.post("/overTime/updateType",{
+                id : id,
+                type : type
+            },function (data) {
+                layer.msg(data.msg);
+            })
+        });
+
+        form.on('radio(rdo2)',function (data) {
+            //layer.msg(data.value);
+            var type = data.value;
+            var id = data.elem.name.substring(5);
+            layer.msg(id);
+            if (type=="加班餐"){
+                type = 1;
+            }else if (type=="加班费"){
+                type = 0;
+            };
+            $.post("/overTime/updateType",{
+                id : id,
+                type : type
+            },function (data) {
+                layer.msg(data.msg);
+            })
+        });
+
+        table.on('tool(radio1clicked)',function (obj) {
+
+/*
+            var data = obj.data;
+            var layEvent = obj.event;
+            var tr = obj.tr;
+
+            alert(data);
+            alert(tr.id);
+            layer.msg(data);
+            layer.msg(data.layEvent+"!");*/
+        });
+/*
+
+        $(".redio1").on("click",function(){
+            layer.msg("??");
+        });
+*/
+
+
+        //搜索
+        $(".search_btn").on("click",function(){
+            if($(".searchVal").val() != ''){
+                // alert($(".searchVal").val());
+                table.reload("userListTable",{
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        key: $(".searchVal").val() //搜索的关键字
+                    }
+                })
+            }else{
+                layer.msg("请输入搜索的内容");
+            }
+        });
+
+        //列表操作
+    })
+</script>
+</body>
+</html>

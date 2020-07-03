@@ -56,11 +56,9 @@ public class ApplyController extends BaseController {
         map.put("info",(applyPageInfo.getList()));
         resultInfo.setData(map);
         return resultInfo;
-}
+    }
 
-
-    //审批
-    @RequestMapping("/updateStatus")
+    /*@RequestMapping("/updateStatus")
     @ResponseBody
     public  ResultInfo updateStatus(String id , int type){
 
@@ -68,12 +66,14 @@ public class ApplyController extends BaseController {
 
         return  applyService.updateStatus(id,type);
 
-    }
+    }*/
     //批量审批
     @RequestMapping("updateStatuss")
     @ResponseBody
-    public  ResultInfo updateStatus( String[] ids , int type){
-        return  applyService.updateStatuss(ids,type);
+    public  ResultInfo updateStatus(String checkIds , int type){
+        String[] arr = checkIds.split(",");
+
+        return  applyService.updateStatuss(arr,type);
 
     }
 
@@ -109,7 +109,7 @@ public class ApplyController extends BaseController {
     //选菜
     @RequestMapping("updateDescription" )
     @ResponseBody
-    public  ResultInfo updateDescription(String id, String description){
+    public  ResultInfo updateDescription(String id,String description){
 
         return  applyService.updateDescription(id,description);
     }
@@ -155,19 +155,11 @@ public class ApplyController extends BaseController {
 
         PageHelper.startPage(page,limit);
         List<CountGroup> countGroups =applyService.countByGroup(startTime,endTime,userGroup);
-        //统计组订餐总数
-//        int groupTotal=0;
-//        for (CountGroup countGroup: countGroups
-//             ) {
-//            groupTotal+=countGroup.getCount();
-//        }
         PageInfo<CountGroup> countGroupPageInfo = new PageInfo<>(countGroups);
         ResultInfo resultInfo=ResultInfo.success();
         Map <String,Object>map=new HashMap();
         map.put("count",(int)countGroupPageInfo.getTotal());
         map.put("info",(countGroupPageInfo.getList()));
-
-//        map.put("groupTotal",groupTotal);
         resultInfo.setData(map);
         return resultInfo;
     }

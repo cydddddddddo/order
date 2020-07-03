@@ -86,12 +86,11 @@ public class ApplyServiceImpl implements ApplyService {
     //批量操作申请
     @Override
     public ResultInfo updateStatuss(String[] ids, int type) {
-        if(null==ids||ids.length==0||type==0){
+        if(null==ids||ids.length==0){
             return  ResultInfo.failure();
         }
         else {
            OverTimeDTO overTimeDTO=overTimeDao.findToday(TimeUtil.getDate());
-            System.out.println(TimeUtil.getDate());
             if (null==overTimeDTO||null==overTimeDTO.getDate()){
                  ResultInfo resultInfo=  ResultInfo.failure();
                  resultInfo.setMsg("请先等管理员确定加班补贴类型");

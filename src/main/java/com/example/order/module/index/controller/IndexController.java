@@ -107,14 +107,24 @@ public class IndexController extends BaseController {
     }
 
 
-    @RequestMapping("/apply/findMeal")
+
+
+    /*@RequestMapping("/apply/findMeal")
     public String applyFindMeal(Model model){
 //        UserDTO user = this.getCurrentUser();
 //        user = NormUtil.normUtil(user);
 //        model.addAttribute("user",user);
         return "apply/Meal";
 
+    }*/
+
+    @RequestMapping("/apply/manager")
+    public String toApplyManager(Model model){
+        return "apply/applyManager";
     }
 
-
+    @RequestMapping("/subsidy/manage")
+    public String subsidyManage(Model model){
+        return "subsidy/subsidyManage";
+    }
 }

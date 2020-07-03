@@ -20,5 +20,5 @@ public interface OverTimeDao {
     int insert(@Param("overTime")OverTimeDTO overTimeDTO);
     int updateTypeById(@Param("id")int id,@Param("type")int type);
     OverTimeDTO findToday(@Param("time")String timestamp);
-    OverTimeDTO findById(@Param("time")int id);
+    OverTimeDTO findById(@Param("id")int id);
 }

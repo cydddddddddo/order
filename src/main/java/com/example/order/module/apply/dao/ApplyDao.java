@@ -4,6 +4,7 @@ import com.example.order.dto.*;
 import com.example.order.dto.Apply;
 import com.example.order.dto.CountGroup;
 import com.example.order.dto.CountMeal;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.access.method.P;
@@ -16,7 +17,6 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface ApplyDao {
-
     void  insertApply(Apply apply);
 
     void updateStatus(@Param("id") String id, @Param("type") int type);

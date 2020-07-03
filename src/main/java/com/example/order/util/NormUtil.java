@@ -1,8 +1,7 @@
 package com.example.order.util;
 
 import com.example.order.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 /**
  * @author Cy
@@ -12,7 +11,7 @@ public class NormUtil {
 
 
     public static UserDTO normUtil(UserDTO user){
-        if (user.getUserRole()!=null&&!user.getUserRole().startsWith("ROLE_")){
+         if (user.getUserRole()!=null&&!user.getUserRole().startsWith("ROLE_")){
             String role = user.getUserRole();
             switch (role){
                 case "管理员":
