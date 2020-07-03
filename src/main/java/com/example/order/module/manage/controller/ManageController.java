@@ -2,6 +2,8 @@ package com.example.order.module.manage.controller;
 
 import com.example.order.dto.UserDTO;
 import com.example.order.module.user.service.UserService;
+import com.example.order.module.user.service.UserServiceImpl;
+import com.example.order.util.NormUtil;
 import com.example.order.util.PoiUtil;
 import com.example.order.util.ResultInfo;
 import io.swagger.annotations.Api;
@@ -9,6 +11,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +30,9 @@ import java.util.List;
 @Api(tags = "管理员api")
 @Controller
 public class ManageController {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Resource
     private UserService userService;
@@ -45,6 +52,11 @@ public class ManageController {
         }
         log.info("fileName is {}",file.getOriginalFilename());
         List<UserDTO> userDTOList= PoiUtil.readExcel(file.getInputStream(),file.getOriginalFilename());
+        for (UserDTO user:userDTOList
+             ) {
+            user = NormUtil.normUtil(user);
+            user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
+        }
         this.userService.insertAllUser(userDTOList);
         resultInfo=ResultInfo.success();
         resultInfo.setData(userDTOList);

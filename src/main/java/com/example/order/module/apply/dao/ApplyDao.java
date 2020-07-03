@@ -3,7 +3,6 @@ package com.example.order.module.apply.dao;
 import com.example.order.dto.Apply;
 import com.example.order.dto.CountGroup;
 import com.example.order.dto.CountMeal;
-import com.example.order.dto.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -15,6 +14,7 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface ApplyDao {
+
     void  insertApply(Apply apply);
 
     void updateStatus(@Param("id") String id, @Param("type") int type);
@@ -26,7 +26,6 @@ public interface ApplyDao {
     List<String> selectUserIdByGroup(@Param("userGroup") String userGroup);
 
     List<Apply> selectTodayGroup(List userIds);
-
 
     List<CountMeal> countByMeal(@Param("startTime") Timestamp startTime, @Param("endTime") Timestamp endTime);
 

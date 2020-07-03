@@ -58,4 +58,9 @@ public class UserServiceImpl implements UserService {
     public Long getCount(String key) {
         return userDao.getCount(key);
     }
+
+    @Override
+    public Long deleteUser(String userId) {
+        return userDao.deleteUser(userId);
+    }
 }

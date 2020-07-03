@@ -144,4 +144,11 @@
             CONCAT('%',#{key},'%')
         </if>
     </select>
+
+    <delete id="deleteUser" parameterType="java.lang.String">
+        DELETE FROM
+            user
+        WHERE
+            user_id = #{userId}
+    </delete>
 </mapper>

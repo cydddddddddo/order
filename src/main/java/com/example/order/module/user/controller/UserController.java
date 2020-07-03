@@ -1,6 +1,7 @@
 package com.example.order.module.user.controller;
 
 import com.example.order.dto.UserDTO;
+import com.example.order.module.user.service.UserService;
 import com.example.order.module.user.service.UserServiceImpl;
 import com.example.order.util.Constast;
 import com.example.order.util.ResultInfo;
@@ -29,7 +30,7 @@ import java.util.Map;
 public class UserController extends BaseController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -46,7 +47,7 @@ public class UserController extends BaseController {
         UserDTO user = this.getCurrentUser();
         try {
             String image = UploadUtil.uploadFile(file, Constast.IMAGE_SET_PATH, user.getUserId());
-            user.setUserPic("");
+
 
             ResultInfo resultObj = this.updateUser(user, image, null, null, model);
             if (resultObj.equals(ResultInfo.success())) {
@@ -144,5 +145,25 @@ public class UserController extends BaseController {
         }
 
         return "user/userAdd";
+    }
+
+    @RequestMapping("user/delete")
+    @ResponseBody
+    public ResultInfo deleteExchange(String deletesId,Model model){
+        if (deletesId!=null){
+
+            String[] arrs = deletesId.split(",");
+            Long num = 0L;
+
+            for (int i = 0; i < arrs.length; i++) {
+                num = userService.deleteUser(arrs[i]);
+                if (num==0L){
+                    return ResultInfo.DELETE_FAILED;
+                }
+                num=0L;
+            }
+            return ResultInfo.DELETE_SUCCESS;
+        }
+        return ResultInfo.DELETE_FAILED;
     }
 }

@@ -1,6 +1,8 @@
 package com.example.order.module.index.controller;
 
 import com.example.order.dto.UserDTO;
+import com.example.order.dto.UserDTO;
+import com.example.order.util.NormUtil;
 import com.example.order.web.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,29 +23,9 @@ public class IndexController extends BaseController {
     @RequestMapping("sys/index")
     public String toIndex(Model model){
         UserDTO user = this.getCurrentUser();
+        user = NormUtil.normUtil(user);
         model.addAttribute("user",user);
         return "system/index/index";
-    }
-
-    @RequestMapping("sys/reset")
-    public String toReset(Model model){
-        UserDTO user = this.getCurrentUser();
-        model.addAttribute("user",user);
-        return "system/index/reset";
-    }
-
-    @RequestMapping("sys/meal")
-    public String toMeal(Model model){
-        UserDTO user = this.getCurrentUser();
-        model.addAttribute("user",user);
-        return "system/index/meal";
-    }
-
-    @RequestMapping("sys/apply")
-    public String toApply(Model model){
-        UserDTO user = this.getCurrentUser();
-        model.addAttribute("user",user);
-        return "system/index/apply";
     }
 
     @RequestMapping("sys/toDesk")
@@ -54,6 +36,7 @@ public class IndexController extends BaseController {
     @RequestMapping("user/info")
     public String toUserInfo(Model model){
         UserDTO user = this.getCurrentUser();
+        user = NormUtil.normUtil(user);
         model.addAttribute("user",user);
         return "user/customer";
     }
@@ -61,6 +44,7 @@ public class IndexController extends BaseController {
     @RequestMapping("user/changePwd")
     public String changePwd(Model model){
         UserDTO user = this.getCurrentUser();
+        user = NormUtil.normUtil(user);
         model.addAttribute("user",user);
         return  "user/changePwd";
     }
@@ -68,8 +52,19 @@ public class IndexController extends BaseController {
     @RequestMapping("user/manage")
     public String userManage(Model model){
         UserDTO user = this.getCurrentUser();
+        user = NormUtil.normUtil(user);
         model.addAttribute("user",user);
         return "user/userManage";
     }
 
+    @RequestMapping("/apply/index")
+    public String applyManage(Model model){
+        UserDTO user = this.getCurrentUser();
+        user = NormUtil.normUtil(user);
+        if (!"ROLE_lea".equals(user.getUserRole())){
+            return "system/index/login";
+        }else {
+            return "apply/applyManager";
+        }
+    }
 }

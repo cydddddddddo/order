@@ -22,6 +22,8 @@ public class ResultInfo {
     @ApiModelProperty(example="0")
     private String code;
     @ApiModelProperty(example="提示信息")
+//=======
+
     private String msg;
     private Object data;
 
