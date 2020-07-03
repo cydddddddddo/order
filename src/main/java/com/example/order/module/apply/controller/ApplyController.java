@@ -33,17 +33,19 @@ public class ApplyController extends BaseController {
         return  applyService.addApply(userId);
     }
 
-    @RequestMapping("/updateStatus")
+    /*@RequestMapping("/updateStatus")
     @ResponseBody
     public  ResultInfo updateStatus(String id , int type){
         return  applyService.updateStatus(id,type);
 
-    }
+    }*/
 
     @RequestMapping("/updateStatuss")
     @ResponseBody
-    public  ResultInfo updateStatus( String[] ids , int type){
-        return  applyService.updateStatuss(ids,type);
+    public  ResultInfo updateStatus(String checkIds , int type){
+        String[] arr = checkIds.split(",");
+
+        return  applyService.updateStatuss(arr,type);
 
     }
 

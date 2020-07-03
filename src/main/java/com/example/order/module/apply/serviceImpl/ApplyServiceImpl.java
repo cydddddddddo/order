@@ -71,7 +71,7 @@ public class ApplyServiceImpl implements ApplyService {
 
     @Override
     public ResultInfo updateStatuss(String[] ids, int type) {
-        if(null==ids||ids.length==0||type==0){
+        if(null==ids||ids.length==0){
             return  ResultInfo.failure();
         }
         else {
