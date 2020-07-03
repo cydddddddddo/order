@@ -19,7 +19,17 @@
             user_id = #{userId}
     </select>
 
-<!--ccj-->
+    <select id="getUserByEmail" resultType="com.example.order.dto.UserDTO">
+        SELECT
+            user_id,
+            user_name,
+            user_password
+        FROM
+            user
+        WHERE
+            user_email = #{email}
+    </select>
+
     <select id="getAllUser" resultType="com.example.order.dto.UserDTO">
         SELECT
             user_id,
@@ -52,7 +62,6 @@
 
     </insert>
 
-<!--//=======-->
 
     <insert id="addUser" parameterType="com.example.order.dto.UserDTO">
         INSERT INTO
