@@ -1,0 +1,118 @@
+.clearfix::after {
+    content: ' ';
+    display: block;
+    clear: both;
+    zoom: 1;
+}
+
+.menu-btn {
+    margin: 20px 30px 10px;
+    height: 48px;
+}
+
+
+/* 菜品管理界面样式 */
+
+.menus-item {
+    float: left;
+    text-align: center;
+    width: 200px;
+    box-sizing: border-box;
+    height: 260px;
+    padding-top: 30px;
+    cursor: pointer;
+    overflow-y: auto;
+    position: relative;
+}
+
+.menus-item:hover {
+    box-shadow: 0 0 5px 1px #cdd0d4;
+}
+
+.menus-item img {
+    width: 114px;
+    height: 114px;
+    margin-bottom: 15px;
+}
+
+.menus-item div {
+    color: #f01414;
+}
+
+.menus-item .check {
+    margin-top: 10px;
+}
+
+.menus-wrap {
+    padding: 25px;
+}
+
+.menus-item .form-status {
+    position: absolute;
+    top: -6px;
+    right: 4px;
+}
+
+.checkdel {
+    margin-left: -110px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.edmitmenu {
+    margin-top: 3px;
+}
+
+
+/* 弹出新增菜品样式 */
+
+.layer-menu-input {
+    width: 200px;
+}
+
+.layer-menu-form {
+    padding-top: 25px;
+}
+
+
+/* 编辑菜品样式 */
+
+.layui-upload-img {
+    width: 92px;
+    height: 92px;
+}
+
+.form-edmitmenu {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+    width: 420px;
+    overflow: hidden;
+    border: 1px solid #cdd0d4;
+    display: none;
+}
+
+.close-btn {
+    height: 30px;
+    line-height: 30px;
+    background-color: #cdd0d4;
+    margin-bottom: 15px;
+}
+
+.close-btn span {
+    float: right;
+    color: rgb(165, 24, 24);
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.upload-img,
+.upload-msg {
+    float: left;
+}
+
+.upload-img {
+    margin-left: 25px;
+}
