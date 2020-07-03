@@ -15,11 +15,8 @@
     <button class="layui-btn" data-type="reload">申请加班</button>
 </div>
 <table class="layui-hide" id="demo" lay-filter="test"></table>
-
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">点餐</a>
 </script>
 
 <script type="text/javascript" src="/resources/layui/layui.js?t=1593348928630"></script>
@@ -46,22 +43,27 @@
             ,page: true
             ,cols: [
                 [
-                {type: "checkbox", fixed:"left", width:50},
-                {field: 'date', title: '申请时间',align: 'center',width: 300,sort:true},
-                {field: 'status', title: '状态',width: 170,align: 'center',sort: true},
-                {field: 'description',title: '说明',width: 170,align: 'center',sort: true}
+                {field: 'date', title: '申请时间',align: 'center',width: 300,sort:true,templet:function (d) {
+                    if(d.date!=null){
+                        let date = new Date(d.date);
+                        let str = formatDateForm(date);
+                        return str;
+                     }
+                        return "没有数据";
+                    }},
+                {field: 'status', title: '状态',width: 170,align: 'center',sort: true,templet:function (d) {
+                        if(d.status=='0'){
+                            return '未通过'
+                        }else if(d.status=='1'){
+                            return '通过'
+                        }
+                        return "加班餐";
+                    }},
+                {field: 'description',title: '说明',width: 170,align: 'center',sort: true},
+                 {fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
              ]
             ]
             ,parseData:function (res) {
-                var rows=res.data.count
-                for(let i=0;i<rows.length;i++){
-                    if(rows[i].status=='0'){
-                        alert(1)
-                        rows[i].status='加班费'
-                    }else{
-                        rows[i].status='加班餐'
-                    }
-                }
                 return{
                     "code":res.code,
                     "count":res.data.count,
@@ -70,24 +72,28 @@
             }
         });
 
+        function formatDateForm(date) {
+            let y = date.getFullYear();
+            let m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            let d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            let h = date.getHours();
+            let minute = date.getMinutes();
+            minute = minute < 10 ? ('0' + minute) : minute;
+            let second= date.getSeconds();
+            second = minute < 10 ? ('0' + second) : second;
+            return y+'-'+m+'-'+h+' '+d+':'+minute+':'+second
+        }
 
         //监听行工具事件
         table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'detail'){
-                layer.msg('查看操作');
-            } else if(layEvent === 'del'){
-                layer.confirm('真的删除行么', function(index){
-                    obj.del(); //删除对应行（tr）的DOM结构
-                    layer.close(index);
-                    //向服务端发送删除指令
-                });
-            } else if(layEvent === 'edit'){
-                layer.msg('编辑操作');
+                layer.msg(JSON.stringify(data))
             }
         });
-
 
         let $ = layui.$, active = {
             reload: function(){
@@ -119,7 +125,6 @@
                 }
             }
         });
-
     });
 </script>
 </body>

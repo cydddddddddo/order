@@ -47,6 +47,7 @@ function initMenu() {
             })
         }
     });
+    addClickEvent();
     layui.use('form', function() {
         var form = layui.form;
         layui.form.render();
@@ -57,70 +58,68 @@ function initMenu() {
         });
     });
 }
-$(function() {
-    // 为按钮添加点击事件
-    function addClickEvent() {
-        $(document).on('click','#Comedit', function() {
-            $.post('/meal/update',{
-                id:parseInt($('.form-edmitmenu').attr('myid')),
-                name:document.getElementById('mealName').value,
-                description:document.getElementById('mealDsc').value,
-            },function (res) {
-                if(res!=null){
-                    if(res.code=='0'){
-                        layer.msg('更新成功');
-                    }
-                    else{
-                        layer.msg('更新失败');
-                    }
+function addClickEvent() {
+    $(document).on('click','#Comedit', function() {
+        $.post('/meal/update',{
+            id:parseInt($('.form-edmitmenu').attr('myid')),
+            name:document.getElementById('mealName').value,
+            description:document.getElementById('mealDsc').value,
+        },function (res) {
+            if(res!=null){
+                if(res.code=='0'){
+                    layer.msg('更新成功');
                 }
-            })
+                else{
+                    layer.msg('更新失败');
+                }
+            }
         })
-        $('.deletemenu').on('click', function() {
-            var menuscheck = [];
-            $('.menus-item .check').each(function(index, item) {
-                $(item).on('click', function() {
-                    menuscheck[index] = !menuscheck[index];
-                })
-                if ($(item).attr('isdel') === 'true') {
-                    menuscheck.push(parseInt($(item).parents('.menus-item').attr('myid')));
-                }
+    })
+    $('.deletemenu').on('click', function() {
+        var menuscheck = [];
+        $('.menus-item .check').each(function(index, item) {
+            $(item).on('click', function() {
+                menuscheck[index] = !menuscheck[index];
             })
-            $.ajax({
-                url:  '/meal/delete',
-                type: 'get',
-                async: false,
-                traditional:true,
-                data: {ids:menuscheck},
-                dataType: 'json',
-                success: function() {
-                   initMenu();
-                }
-            });
+            if ($(item).attr('isdel') === 'true') {
+                menuscheck.push(parseInt($(item).parents('.menus-item').attr('myid')));
+            }
         })
+        $.ajax({
+            url:  '/meal/delete',
+            type: 'get',
+            async: false,
+            traditional:true,
+            data: {ids:menuscheck},
+            dataType: 'json',
+            success: function() {
+                initMenu();
+            }
+        });
+    })
+    $('.edmitmenu').each(function(index, item) {
+        $(item).on('click', function() {
+            $('.form-edmitmenu').css('display', 'block');
+            $('.form-edmitmenu').attr('myid', $(item).parents('.menus-item').attr('myid'));
+            $('.theid').val($(item).parents('.menus-item').attr('myid'));
+            // alert(parseInt($('.form-edmitmenu').attr('myid')))
+            console.log(parseInt($('.form-edmitmenu').attr('myid'))+11);
+        });
+    });
+    $('.close-btn span').on('click', function() {
+        $('.form-edmitmenu').css('display', 'none');
+        initMenu();
         $('.edmitmenu').each(function(index, item) {
             $(item).on('click', function() {
                 $('.form-edmitmenu').css('display', 'block');
                 $('.form-edmitmenu').attr('myid', $(item).parents('.menus-item').attr('myid'));
                 $('.theid').val($(item).parents('.menus-item').attr('myid'));
-               // alert(parseInt($('.form-edmitmenu').attr('myid')))
-                console.log(parseInt($('.form-edmitmenu').attr('myid'))+11);
+                console.log($('.form-edmitmenu').val());
             });
         });
-        $('.close-btn span').on('click', function() {
-            $('.form-edmitmenu').css('display', 'none');
-            initMenu();
-            $('.edmitmenu').each(function(index, item) {
-                $(item).on('click', function() {
-                    $('.form-edmitmenu').css('display', 'block');
-                    $('.form-edmitmenu').attr('myid', $(item).parents('.menus-item').attr('myid'));
-                    $('.theid').val($(item).parents('.menus-item').attr('myid'));
-                    console.log($('.form-edmitmenu').val());
-                });
-            });
-        })
-    }
-
+    })
+}
+$(function() {
+    // 为按钮添加点击事件
     initMenu();
-    addClickEvent();
 })
