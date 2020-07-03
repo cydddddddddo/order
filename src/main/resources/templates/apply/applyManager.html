@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>帖子列表--毕业生生涯追踪系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" contentda="telephone=no">
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/resources/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form">
+
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量允许</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量拒绝</a>
+            </div>
+            <div class="layui-inline">
+                <a class="layui-btn layui-btn-green layui-btn-normal" href="/user/add">申请加班</a>
+            </div>
+            <!--<div class="layui-inline layui-upload-list">
+                <a class="layui-btn layui-btn-green uploadBtn">批量添加</a>
+            </div>-->
+        </form>
+    </blockquote>
+    <table id="applyList" lay-filter="applyList"></table>
+
+    <!--
+        <script type="text/html" id="switchTpl"></script>
+    -->
+
+</form>
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','laydate','upload','table','laytpl'],function(){
+        var form = layui.form,
+            layer = parent.layer === undefined ? layui.layer : top.layer,
+            $ = layui.jquery,
+            laydate = layui.laydate,
+            laytpl = layui.laytpl,
+            upload = layui.upload,
+            table = layui.table;
+
+
+        var tableIns = table.render({
+            elem: '#applyList',
+            url : '/todayGroupApply',
+            cellMinWidth : 50,
+            page : true,
+            height : "full-125",
+            limit : 10,
+            limits : [10,15,20,25],
+            id : "applyListTable",
+            cols : [
+                [
+                    {type: "checkbox", fixed:"left", width:50},
+                    {field: 'id',title: "审批号",width: 100,align: 'center',sort: true},
+                    {field: 'date', title: '申请时间',align: 'center',width: 120,sort:true},
+                    {field: 'userId', title: '员工号',align: 'center',width: 110,sort:true},
+                    {field: 'status', title: '状态',width: 170,align: 'center',sort: true},
+                    {field: 'description',title: '说明',width: 170,align: 'center',sort: true}
+                ]
+            ]
+            ,parseData:function (res) {
+                return{
+                    "code":res.code,
+                    "count":res.data.count,
+                    "data":res.data.info
+                }
+            }
+        });
+
+       /* upload.render({
+            elem: '.uploadBtn',
+            url:'/uploadUerExcel',
+            accept:'file',
+            done:function (res) {
+                if(res){
+                    layer.msg("上传成功！")
+                }
+            }
+        })*/
+
+      /*  table.on('edit(applyList)',function (obj) {
+            var value = obj.value,
+                data = obj.data,
+                field = obj.field;
+            layer.msg('[ID:'+data.userId+'] '+field+'字段更改为:'+value);
+
+            $.post("/user/update",{
+                userId : obj.data.userId,
+                field : obj.field,
+                value : obj.value
+            },function (data) {
+                layer.msg(data.msg);
+            })
+        });*/
+
+        /* table.on('rowDouble(applyList)',function (obj) {
+             window.location = "/exchange/particulars/"+obj.data.id;
+         })*/
+
+        //搜索
+        /*$(".search_btn").on("click",function(){
+            if($(".searchVal").val() != ''){
+                alert($(".searchVal").val());
+                table.reload("applyListTable",{
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        key: $(".searchVal").val() //搜索的关键字
+                    }
+                })
+            }else{
+                layer.msg("请输入搜索的内容");
+            }
+        });
+*/
+        //批量删除
+        $(".delAll_btn").click(function(){
+            var checkStatus = table.checkStatus('applyListTable'),
+                data = checkStatus.data,
+                deleteId = [];
+            if(data.length > 0) {
+                for (var i in data) {
+                    deleteId.push(data[i].userId);
+                }
+                var deletesId =""+deleteId;
+                layer.confirm('确定删除选中的用户？', {icon: 3, title: '提示信息'}, function (index) {
+                    $.post("/user/delete",{
+                        deletesId : deletesId
+                    },function(data){
+                        layer.msg(data.msg);
+                        tableIns.reload();
+                        layer.close(index);
+                    })
+                })
+            }else{
+                layer.msg("请选择需要删除的用户");
+            }
+        })
+
+        //列表操作
+    })
+</script>
+</body>
+</html>

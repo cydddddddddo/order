@@ -1,11 +1,10 @@
 package com.example.order.module.apply.serviceImpl;
 
-import com.example.order.dto.Apply;
-import com.example.order.dto.CountGroup;
-import com.example.order.dto.CountMeal;
-import com.example.order.dto.UserApply;
+import com.example.order.dto.*;
 import com.example.order.module.apply.dao.ApplyDao;
 import com.example.order.module.apply.service.ApplyService;
+import com.example.order.module.user.dao.MealDao;
+import com.example.order.module.user.dao.OverTimeDao;
 import com.example.order.util.RandomUtil;
 import com.example.order.util.ResultInfo;
 import com.example.order.util.TimeUtil;
@@ -25,6 +24,9 @@ public class ApplyServiceImpl implements ApplyService {
     @Autowired
     ApplyDao applyDao;
 
+    @Autowired
+    OverTimeDao overTimeDao;
+
 
 
     @Override
@@ -42,6 +44,8 @@ public class ApplyServiceImpl implements ApplyService {
             apply.setId(id);
             apply.setDate(new Timestamp(System.currentTimeMillis()));
             apply.setUserId(userId);
+            apply.setDescription("");
+            apply.setStatus(2);
             applyDao.insertApply(apply);
             return  ResultInfo.success();
         }
@@ -58,28 +62,44 @@ public class ApplyServiceImpl implements ApplyService {
        }
     }
 
+//    选菜
     @Override
     public ResultInfo updateDescription(String id, String description) {
         if(null==id||id.length()==0||null==description||description.length()==0){
             return  ResultInfo.failure();
         }
         else {
+
             applyDao.updateDescription(id,description);
             return  ResultInfo.success();
         }
 
     }
 
+    //批量操作申请
     @Override
     public ResultInfo updateStatuss(String[] ids, int type) {
         if(null==ids||ids.length==0||type==0){
             return  ResultInfo.failure();
         }
         else {
-
+           OverTimeDTO overTimeDTO=overTimeDao.findToday(TimeUtil.getDate());
+            System.out.println(TimeUtil.getDate());
+            if (null==overTimeDTO||null==overTimeDTO.getDate()){
+                 ResultInfo resultInfo=  ResultInfo.failure();
+                 resultInfo.setMsg("请先等管理员确定加班补贴类型");
+                 return  resultInfo;
+            }
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("status",type);
             params.put("ids",ids);
+            if(overTimeDTO.getType()==0){
+                params.put("description","加班费");
+            }
+            if(overTimeDTO.getType()==1){
+                params.put("description","加班餐");
+            }
+
             applyDao.updateStatuss(params);
             return  ResultInfo.success();
         }
@@ -93,25 +113,32 @@ public class ApplyServiceImpl implements ApplyService {
     }
 
     @Override
-    public List<CountMeal> CountByMeal(Timestamp startTime, Timestamp endTime) {
-        if(null==startTime||null==endTime){
-            return null;
-        }
-        else {
+    public List<CountMeal> CountByMeal(String startTime, String endTime) {
+
+
 
              return  applyDao.countByMeal(startTime,endTime);
-        }
     }
 
     @Override
-    public List<CountGroup> countByGroup(Timestamp startTime, Timestamp endTime) {
-        if(null==startTime||null==endTime){
-            return null;
+    public List<CountGroup> countByGroup(String startTime, String endTime,String userGroup) {
+
+
+
+            return  applyDao.countByGroup(startTime,endTime,userGroup);
+
+    }
+
+    @Override
+    public List<Apply> selectMember(String userId) {
+        if(null==userId&&userId.length()==0){
+            return  null;
         }
         else {
-
-            return  applyDao.countByGroup(startTime,endTime);
+           List<Apply> applyList= applyDao.selectMember(userId);
+          return  applyList;
         }
+
     }
 
 

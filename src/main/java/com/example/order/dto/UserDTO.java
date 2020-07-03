@@ -1,5 +1,6 @@
 package com.example.order.dto;
 
+import com.example.order.util.Constast;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,13 @@ public class UserDTO implements Serializable {
     private String userPic;
 
     private Timestamp loginTime;
+
+    private String  userGroup;
+
+    public String getUserPic(){
+        return Constast.IMAGE_GET_PATH +userPic;
+    }
+    public void setUserPic(String pic){
+        this.userPic = pic;
+    }
 }

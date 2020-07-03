@@ -25,7 +25,9 @@ public interface ApplyService {
     List<UserApply> selectGroupApply(String userGroup);
 
 
-    List<CountMeal> CountByMeal(Timestamp startTime, Timestamp endTime);
+    List<CountMeal> CountByMeal(String startTime, String endTime);
 
-    List<CountGroup> countByGroup(Timestamp startTime, Timestamp endTime);
+    List<CountGroup> countByGroup(String startTime, String endTime,String userGroup);
+
+    List<Apply> selectMember(String userId);
 }

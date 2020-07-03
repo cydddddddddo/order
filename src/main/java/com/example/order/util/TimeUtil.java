@@ -24,4 +24,12 @@ public class TimeUtil {
 
     }
 
+    public static String getDate() {
+
+        SimpleDateFormat sdfTime = new SimpleDateFormat("yyyy-MM-dd");
+
+        return sdfTime.format(new Date());
+
+    }
+
 }
