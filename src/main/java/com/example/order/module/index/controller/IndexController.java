@@ -109,10 +109,10 @@ public class IndexController extends BaseController {
 
     @RequestMapping("/apply/findMeal")
     public String applyFindMeal(Model model){
-        UserDTO user = this.getCurrentUser();
-        user = NormUtil.normUtil(user);
-        model.addAttribute("user",user);
-        return "apply/findMeal";
+//        UserDTO user = this.getCurrentUser();
+//        user = NormUtil.normUtil(user);
+//        model.addAttribute("user",user);
+        return "apply/Meal";
 
     }
 

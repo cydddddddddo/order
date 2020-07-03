@@ -35,8 +35,8 @@ public class ApplyController extends BaseController {
     @ResponseBody
     public ResultInfo addApply(){
 
-
-        return  applyService.addApply("0001");
+        UserDTO user = this.getCurrentUser();
+        return  applyService.addApply(user.getUserId());
     }
 
     //员工查询个人申请表
@@ -44,10 +44,10 @@ public class ApplyController extends BaseController {
     @ResponseBody
     public ResultInfo selectMember(@RequestParam(defaultValue = "1")Integer page,Integer limit ){
 
-//        UserDTO user = this.getCurrentUser();
+        UserDTO user = this.getCurrentUser();
 
         PageHelper.startPage(page,limit);
-        List<Apply> applyList=applyService.selectMember("0001");
+        List<Apply> applyList=applyService.selectMember(user.getUserId());
         PageInfo<Apply> applyPageInfo = new PageInfo<>(applyList);
 
         ResultInfo resultInfo=ResultInfo.success();
@@ -70,7 +70,7 @@ public class ApplyController extends BaseController {
 
     }
     //批量审批
-    @RequestMapping("/updateStatuss")
+    @RequestMapping("updateStatuss")
     @ResponseBody
     public  ResultInfo updateStatus( String[] ids , int type){
         return  applyService.updateStatuss(ids,type);
@@ -83,7 +83,7 @@ public class ApplyController extends BaseController {
     public  ResultInfo findMeal(@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "10") Integer limit){
 
         PageHelper.startPage(page,limit);
-       List<MealDTO> mealDTOS= mealService.findAll();
+        List<MealDTO> mealDTOS= mealService.findAll();
         PageInfo<MealDTO> mealDTOPageInfo = new PageInfo<>(mealDTOS);
         Map <String,Object>map=new HashMap();
         map.put("count",(int)mealDTOPageInfo.getTotal());
@@ -92,6 +92,17 @@ public class ApplyController extends BaseController {
         ResultInfo resultInfo=ResultInfo.success();
         resultInfo.setData(map);
         return  resultInfo;
+    }
+
+
+    @RequestMapping("selectMealTrue")
+    @ResponseBody
+    public  ResultInfo selectMealTrue(){
+
+         List<MealDTO>  mealDTOS= mealService.findAllTrue();
+           ResultInfo resultInfo=ResultInfo.success();
+           resultInfo.setData(mealDTOS);
+           return resultInfo;
     }
 
 

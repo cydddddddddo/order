@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface MealService {
     List<MealDTO> findAll();
+    List<MealDTO> findAllTrue();
+
     int insert(MealDTO mealDTO);
     void deleteById(Integer id);
     int update(MealDTO mealDTO);

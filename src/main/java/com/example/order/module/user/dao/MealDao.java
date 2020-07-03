@@ -16,6 +16,8 @@ import java.util.List;
 @Mapper
 public interface MealDao{
     List<MealDTO> findAll();
+
+    List<MealDTO> findAllTrue();
     int insert(@Param("meal")MealDTO mealDTO);
     void deleteById(@Param("id")Integer id);
     int update(@Param("meal")MealDTO mealDTO);

@@ -22,6 +22,12 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
+    public List<MealDTO> findAllTrue() {
+
+        return mealDao.findAllTrue();
+    }
+
+    @Override
     public int insert(MealDTO mealDTO) {
         return mealDao.insert(mealDTO);
     }

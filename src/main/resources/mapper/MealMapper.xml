@@ -5,6 +5,15 @@
     <select id="findAll" resultType="com.example.order.dto.MealDTO">
         select id,`name`,`description`,`picture`,`status` from meal
     </select>
+
+
+    <select id="findAllTrue" resultType="com.example.order.dto.MealDTO">
+        select id,`name`,`description`,`picture`,`status` from meal where  status=1
+    </select>
+
+
+
+
     <select id="findOne" resultType="com.example.order.dto.MealDTO">
         select id,`name`,`description`,`picture`,`status` from meal
         where id=#{id}
