@@ -66,4 +66,9 @@ public class IndexController extends BaseController {
             return "apply/applyManager";
         }
     }
+
+    @RequestMapping("/subsidy/manage")
+    public String subsidyManage(Model model){
+        return "subsidy/subsidyManage";
+    }
 }

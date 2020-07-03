@@ -18,13 +18,13 @@
         <form class="layui-form">
 
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量允许</a>
+                <a class="layui-btn layui-btn-green layui-btn-normal allowAll_btn">批量允许</a>
             </div>
             <div class="layui-inline">
                 <a class="layui-btn layui-btn-danger layui-btn-normal delAll_btn">批量拒绝</a>
             </div>
             <div class="layui-inline">
-                <a class="layui-btn layui-btn-green layui-btn-normal" href="/user/add">申请加班</a>
+                <a class="layui-btn layui-btn-green layui-btn-normal  ">申请加班</a>
             </div>
             <!--<div class="layui-inline layui-upload-list">
                 <a class="layui-btn layui-btn-green uploadBtn">批量添加</a>
@@ -33,6 +33,34 @@
     </blockquote>
     <table id="applyList" lay-filter="applyList"></table>
 
+    <!--时间转换-->
+    <script>
+        function Format(datetime,fmt) {
+            if (parseInt(datetime)==datetime) {
+                if (datetime.length==10) {
+                    datetime=parseInt(datetime)*1000;
+                } else if(datetime.length==13) {
+                    datetime=parseInt(datetime);
+                }
+            }
+            datetime=new Date(datetime);
+            var o = {
+                "M+" : datetime.getMonth()+1,                 //月份
+                "d+" : datetime.getDate(),                    //日
+                "h+" : datetime.getHours(),                   //小时
+                "m+" : datetime.getMinutes(),                 //分
+                "s+" : datetime.getSeconds(),                 //秒
+                "q+" : Math.floor((datetime.getMonth()+3)/3), //季度
+                "S"  : datetime.getMilliseconds()             //毫秒
+            };
+            if(/(y+)/.test(fmt))
+                fmt=fmt.replace(RegExp.$1, (datetime.getFullYear()+"").substr(4 - RegExp.$1.length));
+            for(var k in o)
+                if(new RegExp("("+ k +")").test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            return fmt;
+        }
+    </script>
     <!--
         <script type="text/html" id="switchTpl"></script>
     -->
@@ -62,10 +90,19 @@
             cols : [
                 [
                     {type: "checkbox", fixed:"left", width:50},
-                    {field: 'id',title: "审批号",width: 100,align: 'center',sort: true},
-                    {field: 'date', title: '申请时间',align: 'center',width: 120,sort:true},
+                    {field: 'id',title: "审批号",width: 300,align: 'center',sort: true},
+                    {field: 'date', title: '申请时间',align: 'center',width: 120,sort:true,
+                        templet:'<div>{{ Format(d.date,"yyyy-MM-dd")}}</div>'},
                     {field: 'userId', title: '员工号',align: 'center',width: 110,sort:true},
-                    {field: 'status', title: '状态',width: 170,align: 'center',sort: true},
+                    {field: 'status', title: '状态',width: 170,align: 'center',sort: true,templet:function (d) {
+                            if (d.status == '0'){
+                                return '未通过'
+                            }else if (d.status == '1'){
+                                return '通过'
+                            }else {
+                                return '未处理'
+                            }
+                        }},
                     {field: 'description',title: '说明',width: 170,align: 'center',sort: true}
                 ]
             ]
@@ -125,19 +162,22 @@
             }
         });
 */
-        //批量删除
-        $(".delAll_btn").click(function(){
+        //批量同意
+        $(".allowAll_btn").click(function(){
             var checkStatus = table.checkStatus('applyListTable'),
                 data = checkStatus.data,
                 deleteId = [];
             if(data.length > 0) {
                 for (var i in data) {
-                    deleteId.push(data[i].userId);
+                    deleteId.push(data[i].id);
                 }
-                var deletesId =""+deleteId;
-                layer.confirm('确定删除选中的用户？', {icon: 3, title: '提示信息'}, function (index) {
-                    $.post("/user/delete",{
-                        deletesId : deletesId
+                var checkIds =""+deleteId;
+                var type = 1;
+                layer.msg(checkIds);
+                layer.confirm('确定同意？', {icon: 3, title: '提示信息'}, function (index) {
+                    $.post("/updateStatuss",{
+                        checkIds : checkIds,
+                        type : type
                     },function(data){
                         layer.msg(data.msg);
                         tableIns.reload();
@@ -145,7 +185,33 @@
                     })
                 })
             }else{
-                layer.msg("请选择需要删除的用户");
+                layer.msg("请先选择");
+            }
+        });
+
+        //批量删除
+        $(".delAll_btn").click(function(){
+            var checkStatus = table.checkStatus('applyListTable'),
+                data = checkStatus.data,
+                deleteId = [];
+            if(data.length > 0) {
+                for (var i in data) {
+                    deleteId.push(data[i].id);
+                }
+                var checkIds =""+deleteId;
+                var type =0;
+                layer.confirm('确定拒绝？', {icon: 3, title: '提示信息'}, function (index) {
+                    $.post("/updateStatuss",{
+                        checkIds : checkIds,
+                        type : type
+                    },function(data){
+                        layer.msg(data.msg);
+                        tableIns.reload();
+                        layer.close(index);
+                    })
+                })
+            }else{
+                layer.msg("请先选择");
             }
         })
 
