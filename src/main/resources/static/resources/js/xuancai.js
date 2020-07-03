@@ -4,7 +4,7 @@ function addClickEvent() {
 
     $('.sure-menu').each(function(index, item) {
         var parent = $(item).parents('.menus-item');
-        const obj = {};
+        var obj = {};
         $(item).on('click', function() {
             obj.id = parent.attr('myid');
         })
@@ -35,7 +35,7 @@ function initMenu() {
         success: function(data) {
             var arr = data.data;
             $('.menus-wrap').html('');
-            let template = '<div class="menus-item" myid="$id">' +
+            var template = '<div class="menus-item" myid="$id">' +
                 '<img src="./images/banner1.jpg" class="menupic">' +
                 '<div class="menuname">$menuname</div>' +
                 '<p class="menudetail">$menudetail</p>' +
@@ -43,7 +43,7 @@ function initMenu() {
                 '</div>';
 
             arr.forEach(function(item, index) {
-                let str = template.replace('$menupic', htp + item.picture)
+                var str = template.replace('$menupic', htp + item.picture)
                     .replace('$id', item.id)
                     .replace('$menuname', item.name)
                     .replace('$menudetail', item.description);
