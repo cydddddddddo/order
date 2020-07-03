@@ -47,17 +47,21 @@
             ,cols: [
                 [
                 {type: "checkbox", fixed:"left", width:50},
-                {field: 'date', title: '申请时间',align: 'center',width: 120,sort:true},
-                {field: 'status1', title: '状态',width: 170,align: 'center',sort: true},
+                {field: 'date', title: '申请时间',align: 'center',width: 300,sort:true},
+                {field: 'status', title: '状态',width: 170,align: 'center',sort: true},
                 {field: 'description',title: '说明',width: 170,align: 'center',sort: true}
              ]
             ]
             ,parseData:function (res) {
-                let row=JSON.parse(res.data.count);
-                for(let i=0;i<row.length;i++){
-                    //row
+                var rows=res.data.count
+                for(let i=0;i<rows.length;i++){
+                    if(rows[i].status=='0'){
+                        alert(1)
+                        rows[i].status='加班费'
+                    }else{
+                        rows[i].status='加班餐'
+                    }
                 }
-                res.date.count=JSON.stringify(row);
                 return{
                     "code":res.code,
                     "count":res.data.count,

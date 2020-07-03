@@ -1,7 +1,6 @@
 package com.example.order.module.index.controller;
 
 import com.example.order.dto.UserDTO;
-import com.example.order.dto.UserDTO;
 import com.example.order.util.NormUtil;
 import com.example.order.web.BaseController;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,27 @@ public class IndexController extends BaseController {
         user = NormUtil.normUtil(user);
         model.addAttribute("user",user);
         return "system/index/index";
+    }
+
+    @RequestMapping("sys/reset")
+    public String toReset(Model model){
+        UserDTO user = this.getCurrentUser();
+        model.addAttribute("user",user);
+        return "system/index/reset";
+    }
+
+    @RequestMapping("sys/meal")
+    public String toMeal(Model model){
+        UserDTO user = this.getCurrentUser();
+        model.addAttribute("user",user);
+        return "system/index/meal";
+    }
+
+    @RequestMapping("sys/apply")
+    public String toApply(Model model){
+        UserDTO user = this.getCurrentUser();
+        model.addAttribute("user",user);
+        return "system/index/apply";
     }
 
     @RequestMapping("sys/toDesk")

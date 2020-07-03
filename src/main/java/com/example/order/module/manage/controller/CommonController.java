@@ -1,6 +1,5 @@
 package com.example.order.module.manage.controller;
 
-import com.example.order.dto.User;
 import com.example.order.dto.UserDTO;
 import com.example.order.module.user.service.MailService;
 import com.example.order.module.user.service.UserService;
