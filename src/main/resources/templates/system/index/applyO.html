@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>员工</title>
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/resources/css/admin.css" media="all" />
+</head>
+<body>
+<div class="demoTable">
+    <button class="layui-btn" data-type="reload">申请加班</button>
+</div>
+<table class="layui-hide" id="demo" lay-filter="test"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">点餐</a>
+</script>
+<div id="addScheduleDiv" style="display:none;">
+    <div class="layui-form-item">
+        <a  href="javascript:void(0)" lay-event="radio1click">
+            <input type="radio" name="type_{{d.id}}" value="加班餐" title="加班餐" class="food" lay-filter="rdo1" {{d.type=="1"?"checked":""}}>
+        </a>
+        <a  href="javascript:void(0)" lay-event="radio2click">
+            <input type="radio" name="type_{{d.id}}" value="加班费" title="加班费" class="money" lay-filter="rdo2" {{d.type=="0"?"checked":""}}>
+        </a>
+    </div>
+</div>
+<script type="text/javascript" src="/resources/layui/layui.js?t=1593348928630"></script>
+<script type="text/javascript" src="/resources/js/xuancai.js"></script>
+<script>
+    layui.config({
+        version: '1593348928630' //为了更新 js 缓存，可忽略
+    });
+
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+        var
+            laypage = layui.laypage //分页
+            ,layer = layui.layer //弹层
+            ,table = layui.table; //表格
+
+
+        //执行一个 table 实例
+        table.render({
+            elem: '#demo'
+            ,height: 'auto'
+            ,url: 'http://172.16.10.79:8080/selectMember' //数据接口
+            ,title: '审计记录'
+            ,limit : 10
+            ,limits : [10,15,20,25]
+            ,page: true
+            ,cols: [
+                [
+                {field: 'date', title: '申请时间',align: 'center',width: 300,sort:true,templet:function (d) {
+                    if(d.date!=null){
+                        let date = new Date(d.date);
+                        let str = formatDateForm(date);
+                        return str;
+                     }
+                        return "没有数据";
+                    }},
+                {field: 'status', title: '状态',width: 170,align: 'center',sort: true,templet:function (d) {
+                        if(d.status=='0'){
+                            return '未通过'
+                        }else if(d.status=='1'){
+                            return '通过'
+                        }
+                        return "审核中";
+                    }},
+                {field: 'description',title: '说明',width: 170,align: 'center',sort: true},
+                 {fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
+             ]
+            ]
+            ,parseData:function (res) {
+                return{
+                    "code":res.code,
+                    "count":res.data.count,
+                    "data":res.data.info
+                }
+            }
+        });
+
+        function formatDateForm(date) {
+            let y = date.getFullYear();
+            let m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            let d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            let h = date.getHours();
+            let minute = date.getMinutes();
+            minute = minute < 10 ? ('0' + minute) : minute;
+            let second= date.getSeconds();
+            second = minute < 10 ? ('0' + second) : second;
+            return y+'-'+m+'-'+h+' '+d+':'+minute+':'+second
+        }
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'detail'){
+                if(data.status=='1'&&data.description!='加班费'){
+                    var ldx=layer.open({ url : '/meal/insert',
+                        type: 1,
+                        title: false //不显示标题栏
+                        ,
+                        closeBtn: false,
+                        area: '335px;',
+                        shade: 0.8,
+                        id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                        ,
+                        btnAlign: 'c',
+                        moveType: 1 //拖拽模式，0或者1
+                        ,
+                        content: $('#addScheduleDiv'),
+                        btn: ["关闭"],
+                        //点击确认执行的方法
+                        yes: function (index, layero) {
+                           layer.close(ldx)
+                            initMenu();
+                        }
+                    });
+                }
+            }
+        });
+
+        let $ = layui.$, active = {
+            reload: function(){
+                $.get('http://172.16.10.79:8080/addApply',null,function (res) {
+                    alert("s")
+                });
+                var demoReload = $('#demoReload');
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                }, 'data');
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        //分页
+        laypage.render({
+            elem: 'pageDemo' //分页容器的id
+            ,count: 100 //总页数
+            ,skin: '#1E9FFF' //自定义选中色值
+            ,jump: function(obj, first){
+                if(!first){
+                    layer.msg('第'+ obj.curr +'页', {offset: 'b'});
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
