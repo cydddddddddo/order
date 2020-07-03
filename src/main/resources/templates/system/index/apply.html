@@ -18,8 +18,14 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">点餐</a>
 </script>
-
+<div id="addScheduleDiv" style="display:none;">
+    <div class="body-item">
+        <fieldset class="layui-elem-field site-demo-button" style="margin-top: 30px;">
+        </fieldset>
+    </div>
+</div>
 <script type="text/javascript" src="/resources/layui/layui.js?t=1593348928630"></script>
+<script type="text/javascript" src="/resources/js/xuancai.js"></script>
 <script>
     layui.config({
         version: '1593348928630' //为了更新 js 缓存，可忽略
@@ -57,7 +63,7 @@
                         }else if(d.status=='1'){
                             return '通过'
                         }
-                        return "加班餐";
+                        return "审核中";
                     }},
                 {field: 'description',title: '说明',width: 170,align: 'center',sort: true},
                  {fixed: 'right', width: 165, align:'center', toolbar: '#barDemo'}
@@ -91,7 +97,28 @@
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'detail'){
-                layer.msg(JSON.stringify(data))
+                if(data.status=='1'&&data.description!='加班费'){
+                    var ldx=layer.open({ url : '/meal/insert',
+                        type: 1,
+                        title: false //不显示标题栏
+                        ,
+                        closeBtn: false,
+                        area: '335px;',
+                        shade: 0.8,
+                        id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                        ,
+                        btnAlign: 'c',
+                        moveType: 1 //拖拽模式，0或者1
+                        ,
+                        content: $('#addScheduleDiv'),
+                        btn: ["关闭"],
+                        //点击确认执行的方法
+                        yes: function (index, layero) {
+                           layer.close(ldx)
+                            initMenu();
+                        }
+                    });
+                }
             }
         });
 
