@@ -40,8 +40,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserDTO loginUser = null;
         try {
             loginUser = userService.getUserById(userId);
-            //数据库中密码已加密，此处可以不用加密
-            //user = new User(loginUser.getName(),loginUser.getPassword(),getAuthorities(loginUser.getRole()));
             user = new User(loginUser.getUserId(),loginUser.getUserPassword(),getAuthorities(loginUser.getUserRole()));
         }catch (Exception e){
             e.printStackTrace();
@@ -57,7 +55,6 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>(2);
-        //GrantedAuthority grantedAuthority =  new SimpleGrantedAuthority(user.getRole());
         authList.add(new SimpleGrantedAuthority(role));
         return authList;
     }
